@@ -3,7 +3,7 @@
 -- Host: localhost    Database: cu_course
 -- ------------------------------------------------------
 -- Server version	8.0.19
-
+use test;
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `conflict_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `conflict_list` (
-  `course_id` varchar(100) NOT NULL,
-  `conflict_id` varchar(100) NOT NULL,
+  `course_id` char(8) NOT NULL,
+  `conflict_id` char(8) NOT NULL,
   PRIMARY KEY (`course_id`,`conflict_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,10 +47,10 @@ DROP TABLE IF EXISTS `corequisit_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `corequisit_list` (
-  `course_id` varchar(100) NOT NULL,
-  `corequisit_id` varchar(100) NOT NULL,
+  `course_id` char(8) NOT NULL,
+  `corequisit_id` char(8) NOT NULL,
   PRIMARY KEY (`course_id`,`corequisit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,11 +72,11 @@ DROP TABLE IF EXISTS `course_info`;
 CREATE TABLE `course_info` (
   `course_id` char(8) NOT NULL,
   `course_name` varchar(100) NOT NULL,
-  `credit` int NOT NULL,
+  `credit` tinyint unsigned NOT NULL,
   `department` varchar(100) NOT NULL,
   `comment` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,10 +97,10 @@ DROP TABLE IF EXISTS `course_session_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `course_session_list` (
-  `course_id` varchar(100) NOT NULL,
+  `course_id` char(8) NOT NULL,
   `session_id` int NOT NULL,
   PRIMARY KEY (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,10 +121,10 @@ DROP TABLE IF EXISTS `prerequisit_list`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prerequisit_list` (
-  `course_id` varchar(100) NOT NULL,
-  `prerequisit_id` varchar(100) NOT NULL,
+  `course_id` char(8) NOT NULL,
+  `prerequisit_id` char(8) NOT NULL,
   PRIMARY KEY (`course_id`,`prerequisit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
