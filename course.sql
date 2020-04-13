@@ -235,8 +235,9 @@ CREATE TABLE `prerequisite_list` (
 --
 
 LOCK TABLES `prerequisite_list` WRITE;
-/*!40000 ALTER TABLE `prerequisite_list` DISABLE KEYS */;
-INSERT INTO `prerequisite_list` VALUES ('CSCI3100','CSCI1110'),('CSCI3100','CSCI1120');
+/*!40000 ALTER TABLE `prerequisite_list` DISABLE KEYS */;INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG3803', 'ENGG3802', '1');
+INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG1410', 'MATH1510', '1');
+INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ESTR1004', 'MATH1510', '1');
 /*!40000 ALTER TABLE `prerequisite_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
