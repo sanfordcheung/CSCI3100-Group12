@@ -5,24 +5,12 @@
 -- Server version	8.0.19
 
 use cusisdb;
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
 -- Table structure for table `course_info`
 --
 
 DROP TABLE IF EXISTS `course_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `course_info` (
   `course_id` char(8) NOT NULL,
   `course_name` varchar(100) NOT NULL,
@@ -31,16 +19,44 @@ CREATE TABLE `course_info` (
   `comment` varchar(1000) DEFAULT NULL,
   PRIMARY KEY (`course_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `course_info`
 --
 
 LOCK TABLES `course_info` WRITE;
-/*!40000 ALTER TABLE `course_info` DISABLE KEYS */;
-INSERT INTO `course_info` VALUES ('CSCI1130','Introducing to Computing Using Java',3,'Computer Science and Engineering',NULL),('CSCI3100','Software Engineering',3,'Computer Science and Engineering',NULL);
-/*!40000 ALTER TABLE `course_info` ENABLE KEYS */;
+INSERT INTO `course_info` VALUES ('CSCI1130','Introducing to Computing Using Java',3,'Computer Science and Engineering',NULL),('CSCI3100','Software Engineering',3,'Computer Science and Engineering',NULL);INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA1333', 'Multiculturalism and China', '2', 'Dept of Anthropology', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA2180', 'Chinese Culture and Society', '3', 'Dept of Anthropology', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA2334', 'China Today', '3', 'Dept of Anthropology', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEB1570', 'Consciousness', '3', 'Dept of Psychology', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEB2222', 'Natural Hazards', '3', 'Dept of Geo & Resource Mgt', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEC1670', 'Politics and Mass Media', '3', 'Dept of Govern & Public Admin', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGED1111', 'Logic', '2', 'Dept of Philosophy', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGED1112', 'Logic and Argumentation', '3', 'Dept of Philosophy', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGFN1000', 'In Dialogue With Nature', '3', 'Office of University GE', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGFN1001', 'In Dialogue with Nature (Cross-institutional)', '3', 'Office of University GE', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGFH1000', 'In Dialogue With Humanity', '3', 'Office of University GE', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG1100', 'Introduction to Engineering Design', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG1110', 'Problem Solving By Programming', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG1310', 'Engineering Physics: Electromagnetics, Optics and Modern Physics', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG1410', 'Linear Algebra and Vector Calculus for Engineers', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG2020', 'Digital Logic and Systems', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG2430', 'Probability and Statistics for Engineers', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG2440', 'Discrete Mathematics for Engineers', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ESTR1002', 'Problem Solving By Programming', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ESTR1003', 'Engineering Physics: Electromagnetics, Optics and Modern Physics', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ESTR1004', 'Linear Algebra and Vector Calculus for Engineers', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ESTR2002', 'Probability and Statistics for Engineers', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ESTR2004', 'Discrete Mathematics for Engineers', '3', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('MATH1510', 'Calculus for Engineers', '3', 'Dept of Mathematics', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('PHYS1003', 'General Physics for Engineers', '3', 'Dept of Physics', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('PHYS1110', 'Engineering Physics: Mechanics and Thermodynamics', '3', 'Dept of Physics', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG1820', 'Engineering Internship', '1', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG3802', 'Introduction to Engineering Entrepreneurship', '1', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('ENGG3803', 'Engineering Entrepreneurship Development Project', '2', 'Fac Office of Engineering', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('CHEM1380', 'Basic Chemistry for Engineers', '3', 'Dept of Chemistry', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('LSCI1001', 'Basic Concepts in Biological Sciences', '3', 'School of Life Sciences', 'N/A');
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('LSCI1003', 'Life Sciences for Engineers', '3', 'School of Life Sciences', 'N/A');
 UNLOCK TABLES;
 
 --
@@ -48,24 +64,19 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `course_session_list`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `course_session_list` (
   `course_id` char(8) NOT NULL,
   `session_id` char(8) NOT NULL,
   PRIMARY KEY (`session_id`,`course_id`),
   UNIQUE KEY `session_id_UNIQUE` (`session_id`)
 ); #ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `course_session_list`
 --
 
 LOCK TABLES `course_session_list` WRITE;
-/*!40000 ALTER TABLE `course_session_list` DISABLE KEYS */;
 INSERT INTO `course_session_list` VALUES ('CSCI1130',6966),('CSCI3100',8431),('CSCI1130',8661);
-/*!40000 ALTER TABLE `course_session_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -73,8 +84,6 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `session_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `session_info` (
   `session_id` char(8) NOT NULL,
   `session_code` varchar(4) NOT NULL,
@@ -92,15 +101,12 @@ CREATE TABLE `session_info` (
   PRIMARY KEY (`session_id`),
   UNIQUE KEY `session_id_UNIQUE` (`session_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `session_info`
 --
 
 LOCK TABLES `session_info` WRITE;
-/*!40000 ALTER TABLE `session_info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `session_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -108,22 +114,17 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `session_tutorial_list`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `session_tutorial_list` (
   `session_id` char(8) NOT NULL,
   `tutorial_id` char(8) NOT NULL,
   PRIMARY KEY (`tutorial_id`,`session_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `session_tutorial_list`
 --
 
 LOCK TABLES `session_tutorial_list` WRITE;
-/*!40000 ALTER TABLE `session_tutorial_list` DISABLE KEYS */;
-/*!40000 ALTER TABLE `session_tutorial_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -131,8 +132,6 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `tutorial_info`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tutorial_info` (
   `tutorial_id` char(8) NOT NULL,
   `tutorial_code` varchar(4) NOT NULL,
@@ -146,49 +145,69 @@ CREATE TABLE `tutorial_info` (
   PRIMARY KEY (`tutorial_id`),
   UNIQUE KEY `tutorial_id_UNIQUE` (`tutorial_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `tutorial_info`
 --
 
 LOCK TABLES `tutorial_info` WRITE;
-/*!40000 ALTER TABLE `tutorial_info` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tutorial_info` ENABLE KEYS */;
 UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 --
 -- Table structure for table `conflict_list`
 --
 
 DROP TABLE IF EXISTS `conflict_list`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `conflict_list` (
   `course_id` char(8) NOT NULL,
   `conflict_id` char(8) NOT NULL,
   `conflict_major` char(40) NOT NULL,
   PRIMARY KEY (`course_id`,`conflict_id`,`conflict_major`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `conflict_list`
 --
 
 LOCK TABLES `conflict_list` WRITE;
-/*!40000 ALTER TABLE `conflict_list` DISABLE KEYS */;
 INSERT INTO `conflict_list` VALUES ('CSCI1130','CSCI1030'),('CSCI1130','CSCI1110'),('CSCI1130','CSCI1120'),('CSCI1130','CSCI1510'),('CSCI1130','CSCI1520'),('CSCI1130','CSCI1530'),('CSCI1130','CSCI1540'),('CSCI1130','ESTR1100'),('CSCI1130','ESTR1102'),('CSCI3100','ENGG3820'),('CSCI3100','ESTR3308'),('CSCI3100','IERG3080');
-/*!40000 ALTER TABLE `conflict_list` ENABLE KEYS */;
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1020', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1030', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1110', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1120', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1130', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1510', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1540', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'ESTR1002', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1310', 'ESTR1003', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1410', 'ESTR1004', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG2430', 'ESTR2002', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG2440', 'CSCI2110', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG2440', 'ESTR2004', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1002', 'CSCI1020', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1002', 'CSCI1030', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1002', 'CSCI1110', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1002', 'CSCI1120', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1002', 'CSCI1130', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1002', 'CSCI1510', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1002', 'CSCI1540', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1002', 'ESTR1002', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1003', 'ENGG1310', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR1004', 'ENGG1410', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR2002', 'ENGG2430', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ESTR2004', 'ENGG2440', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('LSCI1001', 'LSCI1003', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('LSCI1003', 'LSCI1001', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGEA1333', 'N/A', 'Anthropology');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGEA2180', 'UGEA2334', 'Anthropology');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGEA2334', 'UGEA2180', 'Anthropology');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGEB1570', 'N/A', 'Psychology');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGEB2222', 'N/A', 'Geography and Resource Management');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGEC1670', 'N/A', 'Government and Public Administration');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGED1111', 'UGED1112', 'Philosophy');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGED1112', 'UGED1111', 'Philosophy');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGFN1000', 'UGFN1001', 'N/A');
+INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGFN1001', 'UGFN1000', 'N/A');
 UNLOCK TABLES;
 
 --
@@ -196,23 +215,42 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `corequisite_list`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `corequisite_list` (
   `course_id` char(8) NOT NULL,
   `corequisite_id` char(8) NOT NULL,
   `group` char(1) NOT NULL,
   PRIMARY KEY (`course_id`,`corequisite_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `corequisit_list`
 --
 
 LOCK TABLES `corequisite_list` WRITE;
-/*!40000 ALTER TABLE `corequisite_list` DISABLE KEYS */;
-/*!40000 ALTER TABLE `corequisite_list` ENABLE KEYS */;
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '2', 'UGFN1001');
 UNLOCK TABLES;
 
 --
@@ -220,25 +258,21 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `prerequisite_list`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `prerequisite_list` (
   `course_id` char(8) NOT NULL,
   `prerequisite_id` char(8) NOT NULL,
   `group` char(1) NOT NULL,
   PRIMARY KEY (`course_id`,`prerequisite_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `prerequisit_list`
 --
 
 LOCK TABLES `prerequisite_list` WRITE;
-/*!40000 ALTER TABLE `prerequisite_list` DISABLE KEYS */;INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG3803', 'ENGG3802', '1');
+INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG3803', 'ENGG3802', '1');
 INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG1410', 'MATH1510', '1');
 INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ESTR1004', 'MATH1510', '1');
-/*!40000 ALTER TABLE `prerequisite_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 -- Dump completed on 2020-03-25 21:58:52
