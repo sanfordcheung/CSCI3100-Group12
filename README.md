@@ -52,10 +52,8 @@ Remember to change the database connection settings (username, password) in the 
 <h2>Updates</h2>
 
 - 2020-04-13 <br>
-Upload the project frontend and backend framework.
-<br>
-Update README.MD.
-<br>
+Upload the project frontend and backend framework.<br>
+Update README.MD.<br>
 Now, the course search module can only search by keyword. No filter
 or ranking is implemented. The plan generate module allows users to
 drag and pull the courses. The calendar automatically loads courses
