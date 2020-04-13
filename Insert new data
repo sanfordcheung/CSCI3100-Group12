@@ -97,3 +97,8 @@ INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_maj
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGFN1000', 'UGFN1001', 'N/A');
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGFN1001', 'UGFN1000', 'N/A');
 
+//prerequisite:
+INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG3803', 'ENGG3802', '1');
+INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG1410', 'MATH1510', '1');
+INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ESTR1004', 'MATH1510', '1');
+
