@@ -25,7 +25,6 @@ CREATE TABLE `course_info` (
 --
 
 LOCK TABLES `course_info` WRITE;
-INSERT INTO `course_info` VALUES ('CSCI1130','Introducing to Computing Using Java',3,'Computer Science and Engineering',NULL),('CSCI3100','Software Engineering',3,'Computer Science and Engineering',NULL);INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA1333', 'Multiculturalism and China', '2', 'Dept of Anthropology', 'N/A');
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA2180', 'Chinese Culture and Society', '3', 'Dept of Anthropology', 'N/A');
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA2334', 'China Today', '3', 'Dept of Anthropology', 'N/A');
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEB1570', 'Consciousness', '3', 'Dept of Psychology', 'N/A');
