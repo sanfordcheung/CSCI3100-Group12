@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS `conflict_list`;
 CREATE TABLE `conflict_list` (
   `course_id` char(8) NOT NULL,
   `conflict_id` char(8) NOT NULL,
+  `group` char(1) NOT NULL,
   PRIMARY KEY (`course_id`,`conflict_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -49,6 +50,7 @@ DROP TABLE IF EXISTS `corequisit_list`;
 CREATE TABLE `corequisit_list` (
   `course_id` char(8) NOT NULL,
   `corequisit_id` char(8) NOT NULL,
+  `group` char(1) NOT NULL,
   PRIMARY KEY (`course_id`,`corequisit_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

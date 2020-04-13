@@ -1,30 +1,5 @@
--- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
---
--- Host: localhost    Database: coursedb
--- ------------------------------------------------------
--- Server version	8.0.19
-
-use cusisdb;
-
---
--- Table structure for table `course_info`
---
-
-DROP TABLE IF EXISTS `course_info`;
-CREATE TABLE `course_info` (
-  `course_id` char(8) NOT NULL,
-  `course_name` varchar(100) NOT NULL,
-  `credit` tinyint unsigned NOT NULL,
-  `department` varchar(100) NOT NULL,
-  `comment` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`course_id`)
-) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `course_info`
---
-
-LOCK TABLES `course_info` WRITE;
+//course_info:
+INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA1333', 'Multiculturalism and China', '2', 'Dept of Anthropology', 'N/A');
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA2180', 'Chinese Culture and Society', '3', 'Dept of Anthropology', 'N/A');
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEA2334', 'China Today', '3', 'Dept of Anthropology', 'N/A');
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('UGEB1570', 'Consciousness', '3', 'Dept of Psychology', 'N/A');
@@ -56,119 +31,34 @@ INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `depa
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('CHEM1380', 'Basic Chemistry for Engineers', '3', 'Dept of Chemistry', 'N/A');
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('LSCI1001', 'Basic Concepts in Biological Sciences', '3', 'School of Life Sciences', 'N/A');
 INSERT INTO `cusisdb`.`course_info` (`course_id`, `course_name`, `credit`, `department`, `comment`) VALUES ('LSCI1003', 'Life Sciences for Engineers', '3', 'School of Life Sciences', 'N/A');
-UNLOCK TABLES;
 
---
--- Table structure for table `course_session_list`
---
+//corequisite:
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '2', 'UGFN1001');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '1', 'UGFH1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '2', 'UGFN1000');
+INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '2', 'UGFN1001');
 
-DROP TABLE IF EXISTS `course_session_list`;
-CREATE TABLE `course_session_list` (
-  `course_id` char(8) NOT NULL,
-  `session_id` char(8) NOT NULL,
-  PRIMARY KEY (`session_id`,`course_id`),
-  UNIQUE KEY `session_id_UNIQUE` (`session_id`)
-); #ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `course_session_list`
---
-
-LOCK TABLES `course_session_list` WRITE;
-INSERT INTO `course_session_list` VALUES ('CSCI1130',6966),('CSCI3100',8431),('CSCI1130',8661);
-UNLOCK TABLES;
-
---
--- Table structure for table `session_info`
---
-
-DROP TABLE IF EXISTS `session_info`;
-CREATE TABLE `session_info` (
-  `session_id` char(8) NOT NULL,
-  `session_code` varchar(4) NOT NULL,
-  `quota` smallint unsigned NOT NULL,
-  `vacancy` smallint unsigned NOT NULL,
-  `venue` varchar(45) NOT NULL DEFAULT 'TBA',
-  `lecturer` varchar(45) NOT NULL DEFAULT 'TBA',
-  `session_hour` tinyint unsigned NOT NULL,
-  `session_time_1` datetime NOT NULL,
-  `session_time_2` datetime DEFAULT NULL,
-  `session_time_3` datetime DEFAULT NULL,
-  `evalutaion` double DEFAULT NULL,
-  `schedule` varchar(1000) DEFAULT NULL,
-  `commment` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`session_id`),
-  UNIQUE KEY `session_id_UNIQUE` (`session_id`)
-) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `session_info`
---
-
-LOCK TABLES `session_info` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `session_tutorial_list`
---
-
-DROP TABLE IF EXISTS `session_tutorial_list`;
-CREATE TABLE `session_tutorial_list` (
-  `session_id` char(8) NOT NULL,
-  `tutorial_id` char(8) NOT NULL,
-  PRIMARY KEY (`tutorial_id`,`session_id`)
-) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `session_tutorial_list`
---
-
-LOCK TABLES `session_tutorial_list` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `tutorial_info`
---
-
-DROP TABLE IF EXISTS `tutorial_info`;
-CREATE TABLE `tutorial_info` (
-  `tutorial_id` char(8) NOT NULL,
-  `tutorial_code` varchar(4) NOT NULL,
-  `tutorial_hour` tinyint unsigned NOT NULL,
-  `tutorial_time_1`  datetime NOT NULL,
-  `tutorial_time_2` datetime DEFAULT NULL,
-  `tutorial_time_3` datetime DEFAULT NULL,
-  `quota` smallint unsigned NOT NULL,
-  `vacancy` smallint unsigned NOT NULL,
-  `venue` varchar(45) NOT NULL DEFAULT 'TBA',
-  PRIMARY KEY (`tutorial_id`),
-  UNIQUE KEY `tutorial_id_UNIQUE` (`tutorial_id`)
-) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `tutorial_info`
---
-
-LOCK TABLES `tutorial_info` WRITE;
-UNLOCK TABLES;
-
---
--- Table structure for table `conflict_list`
---
-
-DROP TABLE IF EXISTS `conflict_list`;
-CREATE TABLE `conflict_list` (
-  `course_id` char(8) NOT NULL,
-  `conflict_id` char(8) NOT NULL,
-  `conflict_major` char(40) NOT NULL,
-  PRIMARY KEY (`course_id`,`conflict_id`,`conflict_major`)
-) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `conflict_list`
---
-
-LOCK TABLES `conflict_list` WRITE;
+//conflict:
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1020', 'N/A');
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1030', 'N/A');
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1110', 'N/A');
@@ -206,71 +96,9 @@ INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_maj
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGED1112', 'UGED1111', 'Philosophy');
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGFN1000', 'UGFN1001', 'N/A');
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('UGFN1001', 'UGFN1000', 'N/A');
-UNLOCK TABLES;
 
---
--- Table structure for table `corequisit_list`
---
-
-DROP TABLE IF EXISTS `corequisite_list`;
-CREATE TABLE `corequisite_list` (
-  `course_id` char(8) NOT NULL,
-  `corequisite_id` char(8) NOT NULL,
-  `group` char(1) NOT NULL,
-  PRIMARY KEY (`course_id`,`corequisite_id`)
-) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `corequisit_list`
---
-
-LOCK TABLES `corequisite_list` WRITE;
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '1', 'UGFH1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '2', 'UGFN1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA1333', '2', 'UGFN1001');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '1', 'UGFH1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '2', 'UGFN1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2180', '2', 'UGFN1001');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '1', 'UGFH1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '2', 'UGFN1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEA2334', '2', 'UGFN1001');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '1', 'UGFH1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '2', 'UGFN1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB1570', '2', 'UGFN1001');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '1', 'UGFH1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '2', 'UGFN1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEB2222', '2', 'UGFN1001');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '1', 'UGFH1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '2', 'UGFN1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGEC1670', '2', 'UGFN1001');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '1', 'UGFH1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '2', 'UGFN1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1111', '2', 'UGFN1001');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '1', 'UGFH1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '2', 'UGFN1000');
-INSERT INTO `cusisdb`.`corequisite_list` (`course_id`, `group`, `corequisite_id`) VALUES ('UGED1112', '2', 'UGFN1001');
-UNLOCK TABLES;
-
---
--- Table structure for table `prerequisit_list`
---
-
-DROP TABLE IF EXISTS `prerequisite_list`;
-CREATE TABLE `prerequisite_list` (
-  `course_id` char(8) NOT NULL,
-  `prerequisite_id` char(8) NOT NULL,
-  `group` char(1) NOT NULL,
-  PRIMARY KEY (`course_id`,`prerequisite_id`)
-) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `prerequisit_list`
---
-
-LOCK TABLES `prerequisite_list` WRITE;
+//prerequisite:
 INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG3803', 'ENGG3802', '1');
 INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ENGG1410', 'MATH1510', '1');
 INSERT INTO `cusisdb`.`prerequisite_list` (`course_id`, `prerequisite_id`, `group`) VALUES ('ESTR1004', 'MATH1510', '1');
-UNLOCK TABLES;
 
--- Dump completed on 2020-03-25 21:58:52
