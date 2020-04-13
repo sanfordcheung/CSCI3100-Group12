@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : '',
-	database : 'cusisdb'
+	database : 'cusisdbBeta'
 });
 
 var app = express();
