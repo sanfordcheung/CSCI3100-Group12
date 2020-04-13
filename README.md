@@ -14,6 +14,7 @@ Group12 project for CUHK CSCI3100 course
 
 - [StarAdmin Bootstrap Template](https://github.com/BootstrapDash/StarAdmin-Free-Bootstrap-Admin-Template)
 - [jquery week calendar](https://github.com/themouette/jquery-week-calendar)
+- [Login V2](https://colorlib.com/wp/template/login-form-v2/)
 - Frontend: jQuery
 - Backend: Node.js, MySQL
 
@@ -62,7 +63,7 @@ in user's shopping cart into it.
 <h2>Todo list</h2>
 
 Please keep the style consistent. The top navigation bar and
-left slider is common in every pages.  
+left slider are common in every pages.  
 
 <h3> User module</h3>
 
