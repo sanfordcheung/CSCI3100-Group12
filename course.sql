@@ -200,6 +200,7 @@ DROP TABLE IF EXISTS `corequisite_list`;
 CREATE TABLE `corequisite_list` (
   `course_id` char(8) NOT NULL,
   `corequisite_id` char(8) NOT NULL,
+  `group` char(1) NOT NULL,
   PRIMARY KEY (`course_id`,`corequisite_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -223,6 +224,7 @@ DROP TABLE IF EXISTS `prerequisite_list`;
 CREATE TABLE `prerequisite_list` (
   `course_id` char(8) NOT NULL,
   `prerequisite_id` char(8) NOT NULL,
+  `group` char(1) NOT NULL,
   PRIMARY KEY (`course_id`,`prerequisite_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
