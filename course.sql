@@ -170,7 +170,6 @@ CREATE TABLE `conflict_list` (
 --
 
 LOCK TABLES `conflict_list` WRITE;
-INSERT INTO `conflict_list` VALUES ('CSCI1130','CSCI1030'),('CSCI1130','CSCI1110'),('CSCI1130','CSCI1120'),('CSCI1130','CSCI1510'),('CSCI1130','CSCI1520'),('CSCI1130','CSCI1530'),('CSCI1130','CSCI1540'),('CSCI1130','ESTR1100'),('CSCI1130','ESTR1102'),('CSCI3100','ENGG3820'),('CSCI3100','ESTR3308'),('CSCI3100','IERG3080');
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1020', 'N/A');
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1030', 'N/A');
 INSERT INTO `cusisdb`.`conflict_list` (`course_id`, `conflict_id`, `conflict_major`) VALUES ('ENGG1110', 'CSCI1110', 'N/A');
