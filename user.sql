@@ -94,7 +94,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('1155000001','748211','Allen','1155000001@link.cuhk.edu.hk',4,'MIE',0,'N/A',NULL),('1155104429','135790','Bob','1155124429@link.cuhk.edu.hk',3,'Physics',20,'Quantum mechanics',NULL),('1155124427','123456','KUANG, Yurui','1155124427@link.cuhk.edu.hk',2,'Computer Science',60,'N/A',NULL),('1155124428','654321','KUANG, Yutui','1155124428@link.cuhk.edu.hk',2,'Music',40,'Piano',NULL);
+INSERT INTO `user` VALUES ('1155104583','748211','Allen','1155104583@link.cuhk.edu.hk',3,'Computer Science',0,'N/A',NULL),('1155124427','135790','Bob','1155124427@link.cuhk.edu.hk',2,'Computer Science',20,'Quantum mechanics',NULL),('1155148372','123456','Charles','1155148372@link.cuhk.edu.hk',1,'Computer Science',60,'N/A',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
