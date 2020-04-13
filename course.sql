@@ -176,7 +176,8 @@ DROP TABLE IF EXISTS `conflict_list`;
 CREATE TABLE `conflict_list` (
   `course_id` char(8) NOT NULL,
   `conflict_id` char(8) NOT NULL,
-  PRIMARY KEY (`course_id`,`conflict_id`)
+  `conflict_major` char(40) NOT NULL,
+  PRIMARY KEY (`course_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
