@@ -11,23 +11,18 @@ document.addEventListener('DOMContentLoaded', function() {
         success: function (response) {
             for (var i = 0; i < response.courseData.length; i++) {
                 var event1 = {}, event2 = {}, event3 = {};
-                var date;
-                event1['start'] = new Date(response.courseData[i]["session_time_1"]);
-                date = new Date(response.courseData[i]["session_time_1"]);
-                date.setHours(date.getHours()+1);
-                event1['end'] = date;
+                event1['start'] = new Date(response.courseData[i]["session_start_time_1"]);
+                event1['end'] = new Date(response.courseData[i]["session_end_time_1"]);
                 event1['title'] = response.courseData[i]["course_id"];
                 eventData.events.push(event1);
-                event2['start'] = new Date(response.courseData[i]["session_time_2"]);
-                date = new Date(response.courseData[i]["session_time_2"]);
-                date.setHours(date.getHours()+1);
-                event2['end'] = date;
+
+                event2['start'] = new Date(response.courseData[i]["session_start_time_2"]);
+                event2['end'] = new Date(response.courseData[i]["session_end_time_2"]);
                 event2['title'] = response.courseData[i]["course_id"];
                 eventData.events.push(event2);
-                event3['start'] = new Date(response.courseData[i]["session_time_3"]);
-                date = new Date(response.courseData[i]["session_time_3"]);
-                date.setHours(date.getHours()+1);
-                event3['end'] = date;
+
+                event3['start'] = new Date(response.courseData[i]["session_start_time_3"]);
+                event3['end'] = new Date(response.courseData[i]["session_end_time_3"]);
                 event3['title'] = response.courseData[i]["course_id"];
                 eventData.events.push(event3);
             }
