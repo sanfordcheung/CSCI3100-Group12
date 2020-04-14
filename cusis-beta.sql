@@ -138,9 +138,9 @@ CREATE TABLE `session_info` (
   `session_end_time_1` datetime NOT NULL,
   `session_end_time_2` datetime DEFAULT NULL,
   `session_end_time_3` datetime DEFAULT NULL,
-  `evalutaion` double DEFAULT NULL,
+  `evaluation` double DEFAULT NULL,
   `schedule` varchar(2000) DEFAULT NULL,
-  `commment` varchar(500) DEFAULT NULL,
+  `comment` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`session_id`),
   UNIQUE KEY `session_id_UNIQUE` (`session_id`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
