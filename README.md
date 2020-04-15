@@ -52,6 +52,10 @@ Remember to change the database connection settings (username, password) in the 
 
 <h2>Updates</h2>
 
+- 2020-04-16 <br>
+In course search page, support add/remove course to/from shopping cart.
+Implement sorting by attribute.
+
 - 2020-04-13 <br>
 Upload the project frontend and backend framework.<br>
 Update README.MD.<br>

@@ -8,7 +8,6 @@ global.sid = "0";
 global.username = "Jimmy";
 global.email = "Jimmy@gmail.com";
 global.loggedin = false;
-global.inShoppingCart = false;
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
@@ -110,6 +109,30 @@ function courseSearch(request, response) {
         } else {
 
         }
+
+    });
+}
+
+/* check if search result courses are in shopping cart*/
+app.post("/inShoppingCart", inShoppingCart);
+function inShoppingCart(request, response) {
+    var res = request.body.courseData;
+    for (var i=0;i<res.length;i++) {
+        res[i]["in_shopping_cart"] = "false";
+    }
+    connection.query("select session_id from shopping_cart where sid=?", [global.sid], function (error, results, fields) {
+
+        if (results.length > 0) {
+            for (var i=0;i<results.length;i++) {
+                for (var j=0;j<res.length;j++) {
+                    if (results[i].session_id === res[j]["session_id"]) {
+                        res[j]["in_shopping_cart"] = "true";
+                        break;
+                    }
+                }
+            }
+        }
+        response.json(res);
 
     });
 }

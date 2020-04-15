@@ -16,47 +16,86 @@ $(document).ready(function() {
         $.ajax('/courseSearch', {
             type: 'POST',
             data: {keyword: word}
-        }).done(function (response) {
-            $('#courseSearchBody').empty();
-            for (var i=0;i<response.courseData.length;i++) {
-                var tr = $('<tr></tr>');
-                tr.append($('<td></td>').text(response.courseData[i]["course_id"]));
-                tr.append($('<td></td>').text(response.courseData[i]["course_name"].slice(0,course_name_length)));
-                tr.append($('<td></td>').text(response.courseData[i]["credit"]));
-                var cn = "btn btn-inverse-success btn-fw";
-                /*
-                if (response.courseData[i]["in_shopping_cart"] === true) {
-                    cn = "btn btn-inverse-success btn-fw";
-                }
-                */
+        }).done(function (re) {
 
-                tr.append($('<button type="button" class="'+cn+'" id="'+response.courseData[i]["session_id"]+'">Add</button>').click(function () {
-                    let id = this.id.toString();
-                    let btn = document.getElementById(id);
-                    if (btn.classList.contains("btn-inverse-success")) {
-                        btn.classList.remove("btn-inverse-success");
-                        btn.classList.add("btn-inverse-warning");
-                        btn.innerText = "Remove";
-                        $.ajax('/addRemoveCourse', {
-                            type: 'POST',
-                            data: {sessionID: this.id, addCourse: "true"}
-                        }).done(function (response) {
-                        });
+            $.ajax('/inShoppingCart', {
+                type: 'POST',
+                data: {courseData: re.courseData}
+            }).done(function (response) {
+                $('#courseSearchBody').empty();
+
+                for (var i=0;i<response.length;i++) {
+                    var tr = $('<tr></tr>');
+                    tr.append($('<td></td>').text(response[i]["course_id"]));
+                    tr.append($('<td></td>').text(response[i]["course_name"].slice(0, course_name_length)));
+                    tr.append($('<td></td>').text(response[i]["credit"]));
+                    var cn = "btn btn-inverse-success btn-fw";
+                    var innertxt = "Add";
+
+                    if (response[i]["in_shopping_cart"] === "true") {
+                        cn = "btn btn-inverse-warning btn-fw";
+                        innertxt = "Remove";
+                    }
+
+                    if (innertxt === "Add") {
+                        tr.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '">Add</button>').click(function () {
+                            let id = this.id.toString();
+                            let btn = document.getElementById(id);
+                            if (btn.classList.contains("btn-inverse-success")) {
+                                btn.classList.remove("btn-inverse-success");
+                                btn.classList.add("btn-inverse-warning");
+                                btn.innerText = "Remove";
+                                $.ajax('/addRemoveCourse', {
+                                    type: 'POST',
+                                    data: {sessionID: this.id, addCourse: "true"}
+                                }).done(function (response) {
+                                });
+                            } else {
+                                btn.classList.remove("btn-inverse-warning");
+                                btn.classList.add("btn-inverse-success");
+                                btn.innerText = "Add";
+                                $.ajax('/addRemoveCourse', {
+                                    type: 'POST',
+                                    data: {sessionID: this.id, addCourse: "false"}
+                                }).done(function (response) {
+                                });
+                            }
+
+                        }));
                     }
                     else {
-                        btn.classList.remove("btn-inverse-warning");
-                        btn.classList.add("btn-inverse-success");
-                        btn.innerText = "Add";
-                        $.ajax('/addRemoveCourse', {
-                            type: 'POST',
-                            data: {sessionID: this.id, addCourse: "false"}
-                        }).done(function (response) {
-                        });
+                        tr.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '">Remove</button>').click(function () {
+                            let id = this.id.toString();
+                            let btn = document.getElementById(id);
+                            if (btn.classList.contains("btn-inverse-success")) {
+                                btn.classList.remove("btn-inverse-success");
+                                btn.classList.add("btn-inverse-warning");
+                                btn.innerText = "Remove";
+                                $.ajax('/addRemoveCourse', {
+                                    type: 'POST',
+                                    data: {sessionID: this.id, addCourse: "true"}
+                                }).done(function (response) {
+                                });
+                            } else {
+                                btn.classList.remove("btn-inverse-warning");
+                                btn.classList.add("btn-inverse-success");
+                                btn.innerText = "Add";
+                                $.ajax('/addRemoveCourse', {
+                                    type: 'POST',
+                                    data: {sessionID: this.id, addCourse: "false"}
+                                }).done(function (response) {
+                                });
+                            }
+
+                        }));
                     }
 
-                }));
-                $('#courseSearchBody').append(tr);
-            }
+
+                    $('#courseSearchBody').append(tr);
+                }
+
+            });
+
         }) ;
     });
 
@@ -113,6 +152,12 @@ function courseSearchResultSort(ascendingOrder, attribute) {
         rowData["course_name"] = r[1].slice(4);
         rowData["credit"] = r[2].slice(4);
         rowData["session_id"] = r[3].split("id=")[1].slice(1,5);
+        if (document.getElementById(rowData["session_id"]).innerText === "Add") {
+            rowData["in_shopping_cart"] = "false";
+        }
+        else {
+            rowData["in_shopping_cart"] = "true";
+        }
         innerData.push(rowData);
     }
 
@@ -133,24 +178,68 @@ function courseSearchResultSort(ascendingOrder, attribute) {
         tr.append($('<td></td>').text(innerData[i]["course_id"]));
         tr.append($('<td></td>').text(innerData[i]["course_name"]));
         tr.append($('<td></td>').text(innerData[i]["credit"]));
-        tr.append($('<button type="button" class="btn btn-inverse-success btn-fw" id="'+innerData[i]["session_id"]+'">Add</button>').click(function () {
-            let id = this.id.toString();
-            let btn = document.getElementById(id);
-            if (btn.classList.contains("btn-inverse-success")) {
-                btn.classList.remove("btn-inverse-success");
-                btn.classList.add("btn-inverse-warning");
-                btn.innerText = "Remove";
-            }
-            else {
-                btn.classList.remove("btn-inverse-warning");
-                btn.classList.add("btn-inverse-success");
-                btn.innerText = "Add";
-            }
-        }));
+
+        var cn = "btn btn-inverse-success btn-fw";
+        var innertxt = "Add";
+
+        if (innerData[i]["in_shopping_cart"] === "true") {
+            cn = "btn btn-inverse-warning btn-fw";
+            innertxt = "Remove";
+        }
+
+        if (innertxt === "Add") {
+            tr.append($('<button type="button" class="btn btn-inverse-success btn-fw" id="'+innerData[i]["session_id"]+'">Add</button>').click(function () {
+                let id = this.id.toString();
+                let btn = document.getElementById(id);
+                if (btn.classList.contains("btn-inverse-success")) {
+                    btn.classList.remove("btn-inverse-success");
+                    btn.classList.add("btn-inverse-warning");
+                    btn.innerText = "Remove";
+                    $.ajax('/addRemoveCourse', {
+                        type: 'POST',
+                        data: {sessionID: this.id, addCourse: "true"}
+                    }).done(function (response) {
+                    });
+                }
+                else {
+                    btn.classList.remove("btn-inverse-warning");
+                    btn.classList.add("btn-inverse-success");
+                    btn.innerText = "Add";
+                    $.ajax('/addRemoveCourse', {
+                        type: 'POST',
+                        data: {sessionID: this.id, addCourse: "false"}
+                    }).done(function (response) {
+                    });
+                }
+            }));
+        }
+        else {
+            tr.append($('<button type="button" class="btn btn-inverse-warning btn-fw" id="'+innerData[i]["session_id"]+'">Remove</button>').click(function () {
+                let id = this.id.toString();
+                let btn = document.getElementById(id);
+                if (btn.classList.contains("btn-inverse-success")) {
+                    btn.classList.remove("btn-inverse-success");
+                    btn.classList.add("btn-inverse-warning");
+                    btn.innerText = "Remove";
+                    $.ajax('/addRemoveCourse', {
+                        type: 'POST',
+                        data: {sessionID: this.id, addCourse: "true"}
+                    }).done(function (response) {
+                    });
+                }
+                else {
+                    btn.classList.remove("btn-inverse-warning");
+                    btn.classList.add("btn-inverse-success");
+                    btn.innerText = "Add";
+                    $.ajax('/addRemoveCourse', {
+                        type: 'POST',
+                        data: {sessionID: this.id, addCourse: "false"}
+                    }).done(function (response) {
+                    });
+                }
+            }));
+        }
+
         $('#courseSearchBody').append(tr);
     }
-}
-
-function addCourseButtonClick() {
-    alert(this.id);
 }
