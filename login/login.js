@@ -331,4 +331,4 @@ function getTimeTable(request, response) {
             response.json(res);
         }
     });
-}}}
+}
