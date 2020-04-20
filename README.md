@@ -9,12 +9,15 @@ Group12 project for CUHK CSCI3100 course
 - Express - install with command: `npm install express`
 - Express sessions - install with command: `npm install express-session`
 - MySQL for Node.js - install with command: `npm install mysql`
+- E-mail settings for Node.js - install with these command: `npm install nodemailer`, `npm installejs`, `npm install fs`, `npm install path`
+- Random - install with command : `npm install string-random`
 
 <h2>Credits</h2>
 
 - [StarAdmin Bootstrap Template](https://github.com/BootstrapDash/StarAdmin-Free-Bootstrap-Admin-Template)
 - [jquery week calendar](https://github.com/themouette/jquery-week-calendar)
 - [Login V2](https://colorlib.com/wp/template/login-form-v2/)
+- [send e-mail through Node.js](https://github.com/liuxing/node-abc/tree/master/lesson10)
 - Frontend: jQuery
 - Backend: Node.js, MySQL
 
@@ -51,10 +54,6 @@ Remember to change the database connection settings (username, password) in the 
 <br><br>run `npm login.js`.
 
 <h2>Updates</h2>
-
-- 2020-04-16 <br>
-In course search page, support add/remove course to/from shopping cart.
-Implement sorting by attribute.
 
 - 2020-04-13 <br>
 Upload the project frontend and backend framework.<br>
