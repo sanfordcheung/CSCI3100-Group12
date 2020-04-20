@@ -253,7 +253,6 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                        		btn.classList.remove("btn-inverse-success");
                        		btn.classList.add("btn-inverse-warning");
                        		btn.innerText = "Remove";
-						}
                       		$.ajax('/addRemoveCourse', {
                            		type: 'POST',
                        			data: {sessionID: this.id, addCourse: "true"}
