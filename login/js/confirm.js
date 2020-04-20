@@ -1,8 +1,8 @@
 $(document).ready(function() {
 
-$('#ConfirmEnter').click(function () {
-    var code = document.getElementById("code").value;
-    $.ajax('/confirm', {
+    $('#ConfirmEnter').click(function () {
+        var code = document.getElementById("code").value;
+        $.ajax('/confirm', {
             type: 'POST',
             data: {code:code}
         }).done(function (response) {
@@ -12,6 +12,6 @@ $('#ConfirmEnter').click(function () {
                 data: {code:"code"}
             }).done(function (response) {
             });
-});
-});
+        });
+    });
 });
