@@ -9,7 +9,7 @@ Group12 project for CUHK CSCI3100 course
 - Express - install with command: `npm install express`
 - Express sessions - install with command: `npm install express-session`
 - MySQL for Node.js - install with command: `npm install mysql`
-- E-mail settings for Node.js - install with these command: `npm install nodemailer`, `npm installejs`, `npm install fs`, `npm install path`
+- E-mail settings for Node.js - install with these command: `npm install nodemailer`, `npm install ejs`, `npm install fs`, `npm install path`
 - Random - install with command : `npm install string-random`
 
 <h2>Credits</h2>
