@@ -148,7 +148,7 @@ function register(request, response) {
 /* confirm */
 
 app.post('/confirm',confirm);
-app.post('/pages/confirmRedirect', confirmRedirect);
+app.post('/confirmRedirect', confirmRedirect);
 function confirmRedirect(request, response) {
     if(global.confirm == "1")
     {
