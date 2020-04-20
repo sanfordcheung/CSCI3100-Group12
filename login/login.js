@@ -341,4 +341,3 @@ function getTimeTable(request, response) {
         }
     });
 }
->>>>>>> 1a8bc5ec900bfd21e56f7e89a0adb3690f845d05
