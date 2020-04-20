@@ -63,7 +63,6 @@ $(document).ready(function() {
 
                     if (innertxt === "Add") {
                         btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Add</button>').click(function () {
-							//tr.nextUntil('tr.mainRow').slideToggle(400);
                             let id = this.id.toString();
                             let btn = document.getElementById(id);
                             if (btn.classList.contains("btn-inverse-success")) {
@@ -90,7 +89,6 @@ $(document).ready(function() {
                     }
                     else {
                         btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
-                            //tr.nextUntil('tr.mainRow').slideToggle(400);
 							let id = this.id.toString();
                             let btn = document.getElementById(id);
                             if (btn.classList.contains("btn-inverse-success")) {
