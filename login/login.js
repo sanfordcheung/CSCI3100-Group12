@@ -126,9 +126,9 @@ function register(request, response) {
                 from: '"Charles-Kuang" <k1155124427@gmail.com>', // sender address
                 to: email, // list of receivers
                 subject: 'Register Confirmation', // Subject line
-                // 发送text或者html格式
+                // 路垄脣脥text禄貌脮脽html赂帽脢陆
                 text: 'Your active code is: '+code, // plain text body
-                //html: fs.createReadStream(path.resolve(__dirname, 'confirm.html')) // 流
+                //html: fs.createReadStream(path.resolve(__dirname, 'confirm.html')) // 脕梅
                 };
 
                 // send mail with defined transport object
@@ -331,4 +331,4 @@ function getTimeTable(request, response) {
             response.json(res);
         }
     });
-}
+}}}
