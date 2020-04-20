@@ -55,6 +55,10 @@ Remember to change the database connection settings (username, password) in the 
 
 <h2>Updates</h2>
 
+- 2020-04-16 <br>
+In course search page, support add/remove course to/from shopping cart.
+Implement sorting by attribute.
+
 - 2020-04-13 <br>
 Upload the project frontend and backend framework.<br>
 Update README.MD.<br>
@@ -90,34 +94,24 @@ left slider are common in every pages.
 - Lecturer
 - *realtime feedback 
 - *adaptive search
-
 <h4>Filter</h4>
-
 - Enrolled/Passed Courses
 - Duplicated Courses
 - Shopping Cart Courses
 - Time Clash Courses
 - pre/co-requisite
-
 <h4>Ranking</h4>
-
 - default: course code
 - student remark
 - credit
 - vacancy
 - popularity
 - `f(vacancy, popularity)`
-
 <h3>Plan Generate Module</h3>
-
 - plan priority: `f(weight, time)`
 - weight: customized
-
 <h3>*Course recommendation module</h3>
-
 - category: major, elective, UG, minor
 - faculty package
 - pattern matching (major course / minor)
 - remark/voting (elective course / UG course)
-
-
