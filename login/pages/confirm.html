@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Confirm page</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../vendor/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="../vendor/iconfonts/ionicons/css/ionicons.css">
+    <link rel="stylesheet" href="../vendor/iconfonts/typicons/src/font/typicons.css">
+    <link rel="stylesheet" href="../vendor/iconfonts/flag-icon-css/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../vendor/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../vendor/css/vendor.bundle.addons.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../css/shared/style.css">
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../css/demo_1/style.css">
+    <!-- End Layout styles -->
+    <link rel="shortcut icon" href="../images/favicon.png" />
+  </head>
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth confirm-bg-1 theme-one">
+          <div class="row w-100">
+            <div class="col-lg-4 mx-auto">
+              <h2 class="text-center mb-4">Confirm e-mail</h2>
+              <div class="auto-form-wrapper">
+                <form class = "confirm-form"  action="confirmRedirect" method="POST">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="code" placeholder="active code" requried>
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="mdi mdi-check-circle-outline"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <button class="btn btn-primary submit-btn btn-block" id="ConfirmEnter"> Confirm e-mail now</button>	
+                  </div>
+                  <div class="text-block text-center my-3">
+                    <span class="text-small font-weight-semibold">Need to check your information?</span>
+                    <a href="register.html" class="text-black text-small">Back to sign up</a>
+                  </div>
+                  <div class="text-block text-center my-3">
+                    <span class="text-small font-weight-semibold">Already have and account ?</span>
+                    <a href="../login.html" class="text-black text-small">Login</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="../vendor/js/vendor.bundle.base.js"></script>
+    <script src="../vendor/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="../js/shared/off-canvas.js"></script>
+    <script src="../js/shared/misc.js"></script>
+    <script src="../js/confirm.js"></script>
+    <!-- endinject -->
+  </body>
+</html>
