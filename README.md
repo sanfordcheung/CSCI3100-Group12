@@ -6,6 +6,7 @@ Group12 project for CUHK CSCI3100 course
 
 - MySQL server
 - Node.js
+- User from mainland needs to use VPN as the host of e-mail sender is gmail
 - Express - install with command: `npm install express`
 - Express sessions - install with command: `npm install express-session`
 - MySQL for Node.js - install with command: `npm install mysql`
