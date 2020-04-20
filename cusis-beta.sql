@@ -10,6 +10,13 @@ use cusisdbBeta;
 
 use cusisdbBeta;
 
+DROP TABLE IF EXISTS `confirm`;
+CREATE TABLE `cusisdbbeta`.`confirm` (
+  `code` VARCHAR(8) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`code`));
+
+
 --
 -- Table structure for table `course_info`
 --
