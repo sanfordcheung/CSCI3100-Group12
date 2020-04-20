@@ -3,6 +3,7 @@
 -- Host: localhost    Database: cusisdbBeta
 -- ------------------------------------------------------
 -- Server version	8.0.19
+use cusisdbBeta;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
