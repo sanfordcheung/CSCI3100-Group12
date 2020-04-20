@@ -178,7 +178,6 @@ function courseSearchResultSort(ascendingOrder, attribute) {
     var table = document.getElementById("courseSearchBody");
     for (var i=0;i<table.rows.length;i++) {
         var rowData = {};
-		//console.log($(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML);
         var r = table.rows[i].innerHTML.split("</td>");
         rowData["course_id"] = r[0].slice(4);
         rowData["course_name"] = r[1].slice(4);
