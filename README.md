@@ -95,12 +95,15 @@ left slider are common in every pages.
 - Lecturer
 - *realtime feedback 
 - *adaptive search
+
 <h4>Filter</h4>
+
 - Enrolled/Passed Courses
 - Duplicated Courses
 - Shopping Cart Courses
 - Time Clash Courses
 - pre/co-requisite
+
 <h4>Ranking</h4>
 - default: course code
 - student remark
@@ -108,10 +111,14 @@ left slider are common in every pages.
 - vacancy
 - popularity
 - `f(vacancy, popularity)`
+
 <h3>Plan Generate Module</h3>
+
 - plan priority: `f(weight, time)`
 - weight: customized
+
 <h3>*Course recommendation module</h3>
+
 - category: major, elective, UG, minor
 - faculty package
 - pattern matching (major course / minor)
