@@ -10,6 +10,13 @@ use cusisdbBeta;
 
 use cusisdbBeta;
 
+DROP TABLE IF EXISTS `confirm`;
+CREATE TABLE `cusisdbbeta`.`confirm` (
+  `code` VARCHAR(8) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`code`));
+
+
 --
 -- Table structure for table `course_info`
 --
@@ -405,7 +412,7 @@ DROP TABLE IF EXISTS `tutorial_info`;
 CREATE TABLE `tutorial_info` (
   `tutorial_id` char(8) NOT NULL,
   `tutorial_code` varchar(4) NOT NULL,
-  `tutorial_start_time_1`  datetime NOT NULL,
+  `tutorial_start_time_1`   NOT NULL,
   `tutorial_start_time_2` datetime DEFAULT NULL,
   `tutorial_start_time_3` datetime DEFAULT NULL,
   `tutorial_end_time_1`  datetime NOT NULL,
@@ -907,7 +914,7 @@ INSERT INTO `required_course` VALUES ('1155104429',1111,'Data Structure','N'),('
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Table structure for table ``
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -916,10 +923,10 @@ CREATE TABLE `user` (
   `password` varchar(20) NOT NULL,
   `name` varchar(20) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `year` int NOT NULL,
-  `major` varchar(40) NOT NULL,
-  `available_credit` int NOT NULL,
-  `stream` varchar(30) NOT NULL,
+  `year` int,
+  `major` varchar(40),
+  `available_credit` int,
+  `stream` varchar(30),
   `avatar` mediumblob,
   PRIMARY KEY (`sid`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -931,3 +938,11 @@ CREATE TABLE `user` (
 LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES ('1155104583','748211','Allen','1155104583@link.cuhk.edu.hk',3,'Computer Science',0,'N/A',NULL),('1155124427','135790','Bob','1155124427@link.cuhk.edu.hk',2,'Computer Science',20,'Quantum mechanics',NULL),('1155148372','123456','Charles','1155148372@link.cuhk.edu.hk',1,'Computer Science',60,'N/A',NULL);
 UNLOCK TABLES;
+
+
+update session_info set session_start_time_1 = date_add(session_start_time_1, interval 1 week);
+update session_info set session_start_time_2 = date_add(session_start_time_2, interval 1 week);
+update session_info set session_start_time_3 = date_add(session_start_time_3, interval 1 week);
+update session_info set session_end_time_1 = date_add(session_end_time_1, interval 1 week);
+update session_info set session_end_time_2 = date_add(session_end_time_2, interval 1 week);
+update session_info set session_end_time_3 = date_add(session_end_time_3, interval 1 week);

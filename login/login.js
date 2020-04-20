@@ -8,13 +8,15 @@ global.sid = "0";
 global.username = "Jimmy";
 global.email = "Jimmy@gmail.com";
 global.loggedin = false;
+global.inShoppingCart = false;
+global.code = "12345678";
+global.confirm = "0";
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : '',
-	database : 'cusisdbBeta',
-        socketPath : '/tmp/mysql.sock'
+	database : 'cusisdbBeta'
 });
 
 var app = express();
@@ -38,12 +40,10 @@ app.listen(3000);
 
 
 function loginAuthenticate(request, response) {
-
     var sid = request.body.sid;
     var password = request.body.password;
     if (sid && password) {
         connection.query('SELECT * FROM user WHERE sid = ? AND password = ?', [sid, password], function(error, results, fields) {
-            console.log(error);
             if (results.length > 0) {
                 global.loggedin = true;
                 global.sid = sid;
@@ -58,6 +58,115 @@ function loginAuthenticate(request, response) {
     } else {
         response.send('Please enter Username and Password!');
         response.end();
+    }
+}
+/* register */
+app.post('/register', register);
+app.post('/pages/registerRedirect', registerRedirect);
+function registerRedirect(request, response) {
+    if(global.confirm == "1"){
+        global.confirm = "0";
+        response.sendFile(path.join(__dirname + '/pages/confirm.html'));
+    } else {}
+}
+
+function register(request, response) {
+	var sid = request.body.sid;
+ 	var password = request.body.password;
+	var confirm_password = request.body.confirm_password;
+	var email = request.body.email;
+	var name = request.body.name;
+	var check = request.body.check;
+	if(sid && password && confirm_password && email && name && check)
+	{
+		if(check == "false"){
+			response.send('Please agree to our terms.');
+		} else {
+		if(sid.length != 10){
+			response.send('Invalid SID');
+			} else {
+		if(password.length < 6){
+			response.send("The length of password should be more than or equal to 6");
+		} else {
+		if(password != confirm_password){
+			response.send('The two passwords are inconsistent!');
+		} else {
+		connection.query('SELECT * FROM user WHERE sid = ? OR email = ?', [sid, email], function(error, results, fields) {
+            	if (results.length > 0) {
+              	 response.send('This SID/e-mail already has an account!');
+          	  } else {
+                response.send("Valid information, now turn to confirmation page.");
+                global.confirm = "1";
+                 const nodemailer = require('nodemailer');
+                 const ejs = require('ejs');
+                 const fs  = require('fs');
+                 const path = require('path');
+                 const random = require('string-random');
+                 global.code = random(8);
+                 global.sid = sid;
+                 global.email = email;
+                 global.name = name;
+                 global.password = password;
+                 var code = global.code;
+                 connection.query('DELETE FROM confirm WHERE code = ?', [code], function(error, results, fields){});
+                 connection.query('DELETE FROM confirm WHERE email = ?', [email], function(error, results, fields){});
+                 connection.query('INSERT INTO confirm (code,email) VALUES (?,?)', [code, email], function(error, results, fields){});
+                let transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                service: 'gmail', 
+                port: 465,
+                secureConnection: true, 
+                auth: {
+                    user: 'k1155124427@gmail.com',
+                    pass: 'qscqhexswvybjoix',
+                }
+                });
+
+                let mailOptions = {
+                from: '"Charles-Kuang" <k1155124427@gmail.com>', // sender address
+                to: email, // list of receivers
+                subject: 'Register Confirmation', // Subject line
+                // ·¢ËÍtext»òÕßhtml¸ñÊ½
+                text: 'Your active code is: '+code, // plain text body
+                //html: fs.createReadStream(path.resolve(__dirname, 'confirm.html')) // Á÷
+                };
+
+                // send mail with defined transport object
+                transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log('Message sent: %s', email);
+                // Message sent: <04ec7731-cc68-1ef6-303c-61b0f796b78f@qq.com>
+                });
+                }
+         	   response.end();
+      	  });
+	}}}}}
+}
+
+/* confirm */
+
+app.post('/confirm',confirm);
+app.post('/confirmRedirect', confirmRedirect);
+function confirmRedirect(request, response) {
+    if(global.confirm == "1")
+    {
+        global.confirm = "0";
+        response.sendFile(path.join(__dirname + '/login.html'));
+        console.log(__dirname);
+    } else { }
+}
+
+function confirm(request,response){
+    var input_code = request.body.code;
+    if(input_code == global.code){
+        global.confirm = "1";
+        connection.query('INSERT INTO user (sid,password,name,email) VALUES (?,?,?,?)',[global.sid,global.password,global.name,global.email], function(error, results, fields){});
+        response.send("Registration successed! Turn to the login page now.");
+        response.end();
+    } else {
+        response.send("Incorrect code! Please check again.");
     }
 }
 
@@ -122,6 +231,7 @@ function courseSearch(request, response) {
 
     });
 }
+
 
 /* check if search result courses are in shopping cart*/
 app.post("/inShoppingCart", inShoppingCart);
@@ -230,5 +340,5 @@ function getTimeTable(request, response) {
             response.json(res);
         }
     });
-
 }
+>>>>>>> 1a8bc5ec900bfd21e56f7e89a0adb3690f845d05
