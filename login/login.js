@@ -13,7 +13,8 @@ var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
 	password : '',
-	database : 'cusisdbBeta'
+	database : 'cusisdbBeta',
+        socketPath : '/tmp/mysql.sock'
 });
 
 var app = express();
@@ -37,10 +38,12 @@ app.listen(3000);
 
 
 function loginAuthenticate(request, response) {
+
     var sid = request.body.sid;
     var password = request.body.password;
     if (sid && password) {
         connection.query('SELECT * FROM user WHERE sid = ? AND password = ?', [sid, password], function(error, results, fields) {
+            console.log(error);
             if (results.length > 0) {
                 global.loggedin = true;
                 global.sid = sid;
@@ -77,7 +80,7 @@ app.post('/courseSearch', courseSearch);
 function courseSearch(request, response) {
     var word = request.body.keyword;
     var res = {courseData:[]};
-    connection.query('select course_id, course_name, credit, department, course_session_list.session_id, lecturer, venue_1, venue_2, venue_3 ' +
+    connection.query('select course_id, course_name, credit, department, course_session_list.session_id, lecturer, venue_1, venue_2, venue_3, evaluation, schedule, session_info.comment ' +
         'from course_info natural join course_session_list left join session_info ' +
         'on course_session_list.session_id=session_info.session_id', [], function(error, results, fields) {
         if (results.length > 0) {
@@ -90,6 +93,13 @@ function courseSearch(request, response) {
                         dt["credit"] = results[i].credit;
                         dt["department"] = results[i].department;
                         dt["session_id"] = results[i].session_id;
+						dt["lecturer"] = results[i].lecturer;
+						dt["venue_1"] = results[i].venue_1;
+						dt["venue_2"] = results[i].venue_2;
+						dt["venue_3"] = results[i].venue_3;
+						dt["evaluation"] = results[i].evaluation;
+						dt["comment"] = results[i].comment;
+						dt["schedule"] = results[i].schedule;
                         //dt["in_shopping_cart"] = false;
                         /*
                         connection.query('select session_id from shopping_cart where session_id=? and sid=?', [results[i].session_id, global.sid], function (error, result, field) {
