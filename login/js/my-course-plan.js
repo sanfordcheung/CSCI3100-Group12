@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var word = 0;
     var eventData = {
         events : []
     };
     $.ajax({
         type: 'POST',
-        url: '/timeTable',
-        data: {keyword: word},
+        url: '/coursePlan',
+        data: {},
         datatype: 'json',
         success: function (response) {
             for (var i = 0; i < response.courseData.length; i++) {

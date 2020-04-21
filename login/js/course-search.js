@@ -62,7 +62,7 @@ $(document).ready(function() {
 					var btns = $('<div class = "buttons"></div>');
 
                     if (innertxt === "Add") {
-                        btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Add</button>').click(function () {
+                        btns.append($('<button type="button"  class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Add</button>').click(function () {
                             let id = this.id.toString();
                             let btn = document.getElementById(id);
                             if (btn.classList.contains("btn-inverse-success")) {
@@ -73,6 +73,7 @@ $(document).ready(function() {
                                     type: 'POST',
                                     data: {sessionID: this.id, addCourse: "true"}
                                 }).done(function (response) {
+                                    
                                 });
                             } else {
                                 btn.classList.remove("btn-inverse-warning");
@@ -82,13 +83,14 @@ $(document).ready(function() {
                                     type: 'POST',
                                     data: {sessionID: this.id, addCourse: "false"}
                                 }).done(function (response) {
+                                    
                                 });
                             }
 
                         }));
                     }
                     else {
-                        btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
+                        btns.append($('<button type="button"  class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
 							let id = this.id.toString();
                             let btn = document.getElementById(id);
                             if (btn.classList.contains("btn-inverse-success")) {
@@ -99,6 +101,7 @@ $(document).ready(function() {
                                     type: 'POST',
                                     data: {sessionID: this.id, addCourse: "true"}
                                 }).done(function (response) {
+                                    
                                 });
                             } else {
                                 btn.classList.remove("btn-inverse-warning");
@@ -108,6 +111,7 @@ $(document).ready(function() {
                                     type: 'POST',
                                     data: {sessionID: this.id, addCourse: "false"}
                                 }).done(function (response) {
+                                    
                                 });
                             }
 
@@ -254,6 +258,7 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                            		type: 'POST',
                        			data: {sessionID: this.id, addCourse: "true"}
                     		}).done(function (response) {
+                                
                          		});
                  		} else {
                        		btn.classList.remove("btn-inverse-warning");
@@ -263,13 +268,14 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                           		type: 'POST',
                            		data: {sessionID: this.id, addCourse: "false"}
                       		}).done(function (response) {
+                                
                           		});
                   		}
 
             		}));
        		}
             else {
-              		btns.append($('<button type="button" class="' + cn + '" id="' + innerData[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
+              		btns.append($('<button type="button"  class="' + cn + '" id="' + innerData[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
 						let id = this.id.toString();
                     	let btn = document.getElementById(id);
                      	if (btn.classList.contains("btn-inverse-success")) {
@@ -280,6 +286,7 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                              	type: 'POST',
                             	data: {sessionID: this.id, addCourse: "true"}
                          	}).done(function (response) {
+                                
                             	});
                      	} else {
                           	btn.classList.remove("btn-inverse-warning");
@@ -289,6 +296,7 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                             	type: 'POST',
                             	data: {sessionID: this.id, addCourse: "false"}
                           	}).done(function (response) {
+                                
                             	});
                        	}
 
