@@ -57,6 +57,7 @@ Remember to change the database connection settings (username, password) in the 
 <h2>Updates</h2>
 
 - 2020-04-21 <br>
+Implement course search dropdown.<br>
 Implement user registration.
 
 - 2020-04-16 <br>
@@ -78,24 +79,19 @@ left slider are common in every pages.
 
 <h3> User module</h3>
 
-<h4> Login </h4>
-
-- User registration
-- Unsuccessful login redirection
-
 <h4>User information</h4>
 
 - Avatar
 - Preference
 
+<h4>Shopping Cart</h4>
+
+- optimize add/remove course to/from shopping_cart functionality
+
 <h3>Course search module </h3>
 
 <h4>Search </h4>
 
-- Course ID/Course abbr.
-- Course Name
-- Department
-- Lecturer
 - *realtime feedback 
 - *adaptive search
 
