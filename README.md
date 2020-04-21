@@ -18,7 +18,7 @@ Group12 project for CUHK CSCI3100 course
 - [StarAdmin Bootstrap Template](https://github.com/BootstrapDash/StarAdmin-Free-Bootstrap-Admin-Template)
 - [jquery week calendar](https://github.com/themouette/jquery-week-calendar)
 - [Login V2](https://colorlib.com/wp/template/login-form-v2/)
-- [send e-mail through Node.js](https://github.com/liuxing/node-abc/tree/master/lesson10)
+- [Send e-mail through Node.js](https://github.com/liuxing/node-abc/tree/master/lesson10)
 - Frontend: jQuery
 - Backend: Node.js, MySQL
 

@@ -4,11 +4,13 @@ use cusisdbBeta;
 
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: localhost    Database: coursedb
+-- Host: localhost    Database: cusisdbBeta
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
 use cusisdbBeta;
+
+SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `confirm`;
 CREATE TABLE `cusisdbBeta`.`confirm` (
