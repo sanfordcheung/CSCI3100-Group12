@@ -49,7 +49,7 @@
         timeSeparator: ' to ',
         startParam: 'start',
         endParam: 'end',
-        businessHours: {start: 8, end: 18, limitDisplay: true},
+        businessHours: {start: 8, end: 19, limitDisplay: true},
         newEventText: 'New Event',
         timeslotHeight: 25,
         defaultEventLength: 2,
