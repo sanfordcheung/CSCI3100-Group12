@@ -22,7 +22,7 @@ $(document).ready(function() {
             type: 'POST',
             data: {keyword: word}
         }).done(function (re) {
-
+            
             $.ajax('/inShoppingCart', {
                 type: 'POST',
                 data: {courseData: re.courseData}
@@ -46,23 +46,27 @@ $(document).ready(function() {
                     }
 
 					$('#courseSearchBody').append(tr);
-					
 					var info = $('<div class = "information" style = "float: left;"></div>');
 					info.hide();
 					info.append('<h6 style = "font-weight: bold;">Detailed Information</h6>');
 					info.append($('<p></p>').html('<span style = "font-weight: bold;">Session No.: </span>'+response[i]["session_id"].slice(0, course_name_length)));
 					info.append($('<p></p>').html('<span style = "font-weight: bold;">Lecturer: </span>'+response[i]["lecturer"].slice(0, course_name_length)));
 					info.append($('<p></p>').html('<span style = "font-weight: bold;">Department: </span>'+response[i]["department"].slice(0, course_name_length)));
-					info.append($('<p></p>').html('<span style = "font-weight: bold;">Venues: </span>'+'(1)'+response[i]["venue_1"].slice(0, course_name_length)+' (2)'+ response[i]["venue_2"].slice(0, course_name_length)+' (3)'+response[i]["venue_3"].slice(0, course_name_length)));
-					info.append($('<p></p>').html('<span style = "font-weight: bold;">Evaluation: </span>'+response[i]["evaluation"].slice(0, course_name_length)));
+                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Venues: </span>'+'(1)'+response[i]["venue_1"].slice(0, course_name_length)+' (2)'+ response[i]["venue_2"].slice(0, course_name_length)+' (3)'+response[i]["venue_3"].slice(0, course_name_length)));
+                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Session start time: </span>'+'(1)'+response[i]["session_start_time_1"].slice(0, course_name_length)+' (2)'+ response[i]["session_start_time_2"].slice(0, course_name_length)+' (3)'+response[i]["session_start_time_3"].slice(0, course_name_length)));
+                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Session end time: </span>'+'(1)'+response[i]["session_end_time_1"].slice(0, course_name_length)+' (2)'+ response[i]["session_end_time_2"].slice(0, course_name_length)+' (3)'+response[i]["session_end_time_3"].slice(0, course_name_length)));
+                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Quota: </span>'+response[i]["quota"].slice(0, course_name_length)));
+                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Vacancy: </span>'+response[i]["vacancy"].slice(0, course_name_length)));
+                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Evaluation: </span>'+response[i]["evaluation"].slice(0, course_name_length)));
+                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Popularity: </span>'+response[i]["popularity"].slice(0, course_name_length)));
+                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Successfully register rate: </span>'+response[i]["func"].slice(0, course_name_length)));
 					info.append($('<p></p>').html('<span style = "font-weight: bold;">Comment: </span>'+response[i]["comment"].slice(0, schedule_length)));
 					info.append($('<p></p>').html('<span style = "font-weight: bold;">Schedule: </span>'+response[i]["schedule"].slice(0, schedule_length)));
 					$('#courseSearchBody').append(info);
-					
 					var btns = $('<div class = "buttons"></div>');
 
                     if (innertxt === "Add") {
-                        btns.append($('<button type="button"  class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Add</button>').click(function () {
+                        btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Add</button>').click(function () {
                             let id = this.id.toString();
                             let btn = document.getElementById(id);
                             if (btn.classList.contains("btn-inverse-success")) {
@@ -73,7 +77,6 @@ $(document).ready(function() {
                                     type: 'POST',
                                     data: {sessionID: this.id, addCourse: "true"}
                                 }).done(function (response) {
-                                    
                                 });
                             } else {
                                 btn.classList.remove("btn-inverse-warning");
@@ -83,14 +86,13 @@ $(document).ready(function() {
                                     type: 'POST',
                                     data: {sessionID: this.id, addCourse: "false"}
                                 }).done(function (response) {
-                                    
                                 });
                             }
 
                         }));
                     }
                     else {
-                        btns.append($('<button type="button"  class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
+                        btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
 							let id = this.id.toString();
                             let btn = document.getElementById(id);
                             if (btn.classList.contains("btn-inverse-success")) {
@@ -101,7 +103,6 @@ $(document).ready(function() {
                                     type: 'POST',
                                     data: {sessionID: this.id, addCourse: "true"}
                                 }).done(function (response) {
-                                    
                                 });
                             } else {
                                 btn.classList.remove("btn-inverse-warning");
@@ -111,7 +112,6 @@ $(document).ready(function() {
                                     type: 'POST',
                                     data: {sessionID: this.id, addCourse: "false"}
                                 }).done(function (response) {
-                                    
                                 });
                             }
 
@@ -127,7 +127,61 @@ $(document).ready(function() {
         }) ;
     });
 
-	
+    $('#vacancy-btn').click(function () {
+        let btn = document.getElementById("vacancy-btn");
+        if (btn.classList.contains("btn-light")) {
+            btn.classList.remove('btn-light');
+            btn.classList.add('btn-secondary');
+            courseSearchResultSort(true, "vacancy");
+        }
+        else {
+            btn.classList.remove('btn-secondary');
+            btn.classList.add('btn-light');
+            courseSearchResultSort(false, "vacancy");
+        }
+    });
+
+    $('#evaluation-btn').click(function () {
+        let btn = document.getElementById("evaluation-btn");
+        if (btn.classList.contains("btn-light")) {
+            btn.classList.remove('btn-light');
+            btn.classList.add('btn-secondary');
+            courseSearchResultSort(true, "evaluation");
+        }
+        else {
+            btn.classList.remove('btn-secondary');
+            btn.classList.add('btn-light');
+            courseSearchResultSort(false, "evaluation");
+        }
+    });
+
+    $('#popularity-btn').click(function () {
+        let btn = document.getElementById("popularity-btn");
+        if (btn.classList.contains("btn-light")) {
+            btn.classList.remove('btn-light');
+            btn.classList.add('btn-secondary');
+            courseSearchResultSort(true, "popularity");
+        }
+        else {
+            btn.classList.remove('btn-secondary');
+            btn.classList.add('btn-light');
+            courseSearchResultSort(false, "popularity");
+        }
+    });
+
+    $('#rate-btn').click(function () {
+        let btn = document.getElementById("rate-btn");
+        if (btn.classList.contains("btn-light")) {
+            btn.classList.remove('btn-light');
+            btn.classList.add('btn-secondary');
+            courseSearchResultSort(true, "func");
+        }
+        else {
+            btn.classList.remove('btn-secondary');
+            btn.classList.add('btn-light');
+            courseSearchResultSort(false, "func");
+        }
+    });
 	
     $('#course-name-btn').click(function () {
         let btn = document.getElementById("course-name-btn");
@@ -189,10 +243,16 @@ function courseSearchResultSort(ascendingOrder, attribute) {
         rowData["session_id"] = $(table.rows[i]).nextUntil('tr.mainRow').get(1).innerHTML.split("id=")[1].slice(1,5);
 		rowData["lecturer"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[1].split("</span>")[1];
 		rowData["department"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[2].split("</span>")[1];
-		rowData["venues"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[3].split("</span>")[1];
-		rowData["evaluation"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[4].split("</span>")[1];
-		rowData["comment"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[5].split("</span>")[1];
-		rowData["schedule"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[6].split("</span>")[1];
+        rowData["venues"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[3].split("</span>")[1];
+        rowData["session_start_time"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[4].split("</span>")[1];
+        rowData["session_end_time"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[5].split("</span>")[1];
+        rowData["quota"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[6].split("</span>")[1];
+        rowData["vacancy"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[7].split("</span>")[1];
+        rowData["evaluation"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[8].split("</span>")[1];
+        rowData["popularity"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[9].split("</span>")[1];
+        rowData["func"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[10].split("</span>")[1];
+		rowData["comment"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[11].split("</span>")[1];
+		rowData["schedule"] = $(table.rows[i]).nextUntil('tr.mainRow').get(0).innerHTML.split("</p>")[12].split("</span>")[1];
         if (document.getElementById(rowData["session_id"]).innerText === "Add") {
             rowData["in_shopping_cart"] = "false";
         }
@@ -231,15 +291,22 @@ function courseSearchResultSort(ascendingOrder, attribute) {
            	}
 
 			$('#courseSearchBody').append(tr);
-					
 			var info = $('<div class = "information" style = "float: left;"></div>');
 			info.hide();
 			info.append('<h6 style = "font-weight: bold;">Detailed Information</h6>');
 			info.append($('<p></p>').html('<span style = "font-weight: bold;">Session No.: </span>'+innerData[i]["session_id"].slice(0, course_name_length)));
 			info.append($('<p></p>').html('<span style = "font-weight: bold;">Lecturer: </span>'+innerData[i]["lecturer"].slice(0, course_name_length)));
 			info.append($('<p></p>').html('<span style = "font-weight: bold;">Department: </span>'+innerData[i]["department"].slice(0, course_name_length)));
-			info.append($('<p></p>').html('<span style = "font-weight: bold;">Venues: </span>'+innerData[i]["venues"].slice(0, course_name_length)));
-			info.append($('<p></p>').html('<span style = "font-weight: bold;">Evaluation: </span>'+innerData[i]["evaluation"].slice(0, course_name_length)));
+            info.append($('<p></p>').html('<span style = "font-weight: bold;">Venues: </span>'+innerData[i]["venues"].slice(0, course_name_length)));
+            info.append($('<p></p>').html('<span style = "font-weight: bold;">Session start time: </span>'+innerData[i]["session_start_time"].slice(0, course_name_length)));
+            info.append($('<p></p>').html('<span style = "font-weight: bold;">Session end time: </span>'+innerData[i]["session_end_time"].slice(0, course_name_length)));
+            info.append($('<p></p>').html('<span style = "font-weight: bold;">Quota: </span>'+innerData[i]["quota"].slice(0, course_name_length)));
+            info.append($('<p></p>').html('<span style = "font-weight: bold;">Vacancy: </span>'+innerData[i]["vacancy"].slice(0, course_name_length)));
+            //alert("?");
+            info.append($('<p></p>').html('<span style = "font-weight: bold;">Evaluation: </span>'+innerData[i]["evaluation"].slice(0, course_name_length)));
+            //alert("!");
+            info.append($('<p></p>').html('<span style = "font-weight: bold;">Popularity: </span>'+innerData[i]["popularity"].slice(0, course_name_length)));
+            info.append($('<p></p>').html('<span style = "font-weight: bold;">Successfully Register rate: </span>'+innerData[i]["func"].slice(0, course_name_length)));
 			info.append($('<p></p>').html('<span style = "font-weight: bold;">Comment: </span>'+innerData[i]["comment"].slice(0, schedule_length)));
 			info.append($('<p></p>').html('<span style = "font-weight: bold;">Schedule: </span>'+innerData[i]["schedule"].slice(0, schedule_length)));
 			$('#courseSearchBody').append(info);
@@ -258,7 +325,6 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                            		type: 'POST',
                        			data: {sessionID: this.id, addCourse: "true"}
                     		}).done(function (response) {
-                                
                          		});
                  		} else {
                        		btn.classList.remove("btn-inverse-warning");
@@ -268,14 +334,13 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                           		type: 'POST',
                            		data: {sessionID: this.id, addCourse: "false"}
                       		}).done(function (response) {
-                                
                           		});
                   		}
 
             		}));
        		}
             else {
-              		btns.append($('<button type="button"  class="' + cn + '" id="' + innerData[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
+              		btns.append($('<button type="button" class="' + cn + '" id="' + innerData[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
 						let id = this.id.toString();
                     	let btn = document.getElementById(id);
                      	if (btn.classList.contains("btn-inverse-success")) {
@@ -286,7 +351,6 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                              	type: 'POST',
                             	data: {sessionID: this.id, addCourse: "true"}
                          	}).done(function (response) {
-                                
                             	});
                      	} else {
                           	btn.classList.remove("btn-inverse-warning");
@@ -296,7 +360,6 @@ function courseSearchResultSort(ascendingOrder, attribute) {
                             	type: 'POST',
                             	data: {sessionID: this.id, addCourse: "false"}
                           	}).done(function (response) {
-                                
                             	});
                        	}
 

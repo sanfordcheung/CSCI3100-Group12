@@ -63,6 +63,9 @@ Remember to change the database connection settings (username, password) in the 
 
 <h2>Updates</h2>
 
+- 2020-04-22 <br>
+Implement Ranking
+
 - 2020-04-21 <br>
 Implement plan generation. <br>
 Implement course search dropdown.<br>
@@ -114,11 +117,13 @@ left slider are common in every pages.
 
 <h4>Ranking</h4>
 
-- student remark
-- vacancy
-- popularity
-- `f(vacancy, popularity)`
-
+- Vacancy
+- Students' evaluation
+- popularity: number of people who have added the course into his/her shopping_cart
+- Successful registration rate: `(p = popularity * 5 + 30)`  
+`1`,(vacancy >= p * 0.9, vacancy > 0)   
+`vacancy/(p*0.9)`,(vacancy < p * 0.9)   
+`0`,(p = 0) 
 <h3>Plan Generate Module</h3>
 
 - refinement: now only one plan can be generated when the user press `Get Plan`
