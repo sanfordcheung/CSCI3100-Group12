@@ -10,6 +10,7 @@ use cusisdbBeta;
 
 use cusisdbBeta;
 
+SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `confirm`;
@@ -1010,7 +1011,8 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES ('1155000001','748211','Allen','1155000001@link.cuhk.edu.hk',3,'Computer Science',0,'N/A',NULL),('1155124427','135790','Bob','1155124427@link.cuhk.edu.hk',2,'Computer Science',20,'Quantum mechanics',NULL),('1155148372','123456','Charles','1155148372@link.cuhk.edu.hk',1,'Computer Science',60,'N/A',NULL);
 UNLOCK TABLES;
 
-/*
+use cusisdbBeta;
+
 DROP TABLE IF EXISTS `course_plan`;
 CREATE TABLE `course_plan` (
   `course_id` char(8) NOT NULL,
@@ -1027,9 +1029,9 @@ CREATE TABLE `course_plan` (
   `session_end_time_2` datetime DEFAULT NULL,
   `session_end_time_3` datetime DEFAULT NULL,
   `sid` varchar(10) NOT NULL,
-  PRIMARY KEY (`sid`,`session_id`,`tutorial_id`)
+  `plan_index` char(8) NOT NULL,
+  PRIMARY KEY (`sid`,`session_id`,`tutorial_id`,`plan_index`)
 ) ;#ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-*/
 
 update session_info set session_start_time_1 = date_add(session_start_time_1, interval 1 week);
 update session_info set session_start_time_2 = date_add(session_start_time_2, interval 1 week);
