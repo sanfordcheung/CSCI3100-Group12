@@ -3,7 +3,7 @@ var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var path = require('path');
-
+//TODO: debug use only.
 global.sid = "0";
 global.username = "Jimmy";
 global.email = "Jimmy@gmail.com";
@@ -11,15 +11,13 @@ global.loggedin = false;
 global.inShoppingCart = false;
 global.code = "12345678";
 global.confirm = "0";
-global.time_convert = 1000;
-global.max_credits_per_term = 19;
-global.course_plan_default_index = 0; // TODO: load course plan index from course plan table
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '123456',
-	database : 'cusisdbBeta'
+	password : '',
+	database : 'cusisdbBeta',
+    socketPath : '/tmp/mysql.sock'
 });
 
 var app = express();
@@ -29,11 +27,9 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true
 }));
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/'));
-app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
-app.use(express.json({limit: '50mb', extended: true}));
 
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/login.html'));
@@ -49,6 +45,7 @@ function loginAuthenticate(request, response) {
     var password = request.body.password;
     if (sid && password) {
         connection.query('SELECT * FROM user WHERE sid = ? AND password = ?', [sid, password], function(error, results, fields) {
+		console.log(error);
             if (results.length > 0) {
                 global.loggedin = true;
                 global.sid = sid;
@@ -128,7 +125,7 @@ function register(request, response) {
                 });
 
                 let mailOptions = {
-                from: '"CU Reg Course" <k1155124427@gmail.com>', // sender address
+                from: '"Charles-Kuang" <k1155124427@gmail.com>', // sender address
                 to: email, // list of receivers
                 subject: 'Register Confirmation', // Subject line
                 // ·¢ËÍtext»òÕßhtml¸ñÊ½
@@ -194,51 +191,26 @@ app.post('/courseSearch', courseSearch);
 function courseSearch(request, response) {
     var word = request.body.keyword;
     var res = {courseData:[]};
-    connection.query('select course_id, course_name, credit, department, course_session_list.session_id, lecturer, venue_1, venue_2, venue_3, session_start_time_1, ' +
-        'session_start_time_2, session_start_time_3, session_end_time_1, session_end_time_2, session_end_time_3, quota, vacancy, evaluation, popularity, schedule, session_info.comment ' +
+    connection.query('select course_id, course_name, credit, department, course_session_list.session_id, lecturer, venue_1, venue_2, venue_3, evaluation, schedule, session_info.comment ' +
         'from course_info natural join course_session_list left join session_info ' +
-        'on course_session_list.session_id=session_info.session_id', [], 
-        function(error, results, fields) {
+        'on course_session_list.session_id=session_info.session_id', [], function(error, results, fields) {
         if (results.length > 0) {
             for (var i=0;i<results.length;i++) {
                 for (var str in results[i]) {
                     if (!!results[i][str] && results[i][str].toString().toUpperCase().includes(word.toUpperCase())) {
-                        var dt = new Object();
-                        var popularity;
+                        var dt = {};
                         dt["course_id"] = results[i].course_id;
                         dt["course_name"] = results[i].course_name;
                         dt["credit"] = results[i].credit;
                         dt["department"] = results[i].department;
                         dt["session_id"] = results[i].session_id;
-			            dt["lecturer"] = results[i].lecturer;
-			            dt["venue_1"] = results[i].venue_1;
-			            dt["venue_2"] = results[i].venue_2;
-                        dt["venue_3"] = results[i].venue_3;
-                        dt["session_start_time_1"] = results[i].session_start_time_1;
-                        dt["session_start_time_2"] = results[i].session_start_time_2;
-                        dt["session_start_time_3"] = results[i].session_start_time_3;
-                        dt["session_end_time_1"] = results[i].session_end_time_1;
-                        dt["session_end_time_2"] = results[i].session_end_time_2;
-                        dt["session_end_time_3"] = results[i].session_end_time_3;
-                        dt["quota"] = results[i].quota;
-			            dt["vacancy"] = results[i].vacancy;
-                        dt["evaluation"] = results[i].evaluation;
-                        dt["popularity"] = results[i].popularity;
-                        popularity = (results[i].popularity * 5 + 30).toFixed(2);
-                        if(popularity * 0.9 > results[i].vacancy && results[i].vacancy != null){
-                            dt['func'] = (results[i].vacancy/(popularity*0.9)).toFixed(2);
-                        } else {
-                            var number;
-                            if(dt['vacancy'] > 0){
-                                number = 1;
-                                dt['func'] = number.toFixed(2);
-                            } else {
-                                number = 1;
-                                dt['func'] = number.toFixed(2);
-                            }
-                        }
+						dt["lecturer"] = results[i].lecturer;
+						dt["venue_1"] = results[i].venue_1;
+						dt["venue_2"] = results[i].venue_2;
+						dt["venue_3"] = results[i].venue_3;
+						dt["evaluation"] = results[i].evaluation;
 						dt["comment"] = results[i].comment;
-                        dt["schedule"] = results[i].schedule;
+						dt["schedule"] = results[i].schedule;
                         //dt["in_shopping_cart"] = false;
                         /*
                         connection.query('select session_id from shopping_cart where session_id=? and sid=?', [results[i].session_id, global.sid], function (error, result, field) {
@@ -253,6 +225,7 @@ function courseSearch(request, response) {
                     }
                 }
             }
+
             response.json(res);
         } else {
 
@@ -286,10 +259,33 @@ function inShoppingCart(request, response) {
     });
 }
 
+/* check if search result courses are enrolled or passed */
+app.post("/isEnrolled", isEnrolled);
+function isEnrolled(request, response){
+	var res = request.body.courseData;
+	for (var i=0; i<res.length;i++){
+		res[i]["is_enrolled"] = "false";
+	}
+	connection.query("select course_id from course_history where sid=?", [global.sid], function(error, results, fields) {
+		if (results.length > 0) {
+            for (var i=0;i<results.length;i++) {
+                for (var j=0;j<res.length;j++) {
+                    if (results[i].course_id === res[j]["course_id"]) {
+                        res[j]["is_enrolled"] = "true";
+                        break;
+                    }
+                }
+            }
+        }
+        response.json(res);
+	});
+}
+
 /* Add/Remove course to/from shopping cart */
 app.post("/addRemoveCourse", addRemoveCourse);
 function addRemoveCourse(request, response) {
     if (request.body.addCourse === "true") {
+
         connection.query("select course_id, session_info.session_id " +
             "from course_info natural join course_session_list left join session_info " +
             "on course_session_list.session_id=session_info.session_id " +
@@ -297,27 +293,23 @@ function addRemoveCourse(request, response) {
             if (results.length > 0) {
                 response["course_id"] = results[0].course_id;
                 response["session_id"] = results[0].session_id;
+                // TODO: support tutorial selection
                 response["tutorial_id"] = "0000";
                 response["sid"] = global.sid;
-                connection.query("insert into shopping_cart values (?, ?, ?, ?)", [response["course_id"], response["session_id"], response["tutorial_id"], response["sid"]], function (err, re, fields){});
-                connection.query("UPDATE session_info SET popularity = popularity+1 WHERE session_id = ?", [response["session_id"]], function (err, re, fields) {});
+                connection.query("insert into shopping_cart values (?, ?, ?, ?)", [response["course_id"], response["session_id"], response["tutorial_id"], response["sid"]], function (err, re, fields) {
+                });
             }
+
         });
-        /*
-        response["course_id"] = request.body.courseID;
-        response["session_id"] = request.body.sessionID;
-        response["tutorial_id"] = "0000";
-        response["sid"] = global.sid;
-        connection.query("insert into shopping_cart values (?, ?, ?, ?)", [response["course_id"], response["session_id"], response["tutorial_id"], response["sid"]], function (err, re, fields) {
-            response.json(re);
-        });
-        */
+
     }
     else {
         response["session_id"] = request.body.sessionID;
-        connection.query("delete from shopping_cart where session_id=?", [response["session_id"]], function (err, re, fields) {});
-        connection.query("UPDATE session_info SET popularity = popularity-1 WHERE session_id = ?", [response["session_id"]], function (err, re, fields) {});
+        connection.query("delete from shopping_cart where session_id=?", [response["session_id"]], function (err, re, fields) {
+        });
+
     }
+
 }
 
 /* get shopping cart */
@@ -328,13 +320,13 @@ function getShoppingCart(request, response) {
     var sid = global.sid;
 
     var res = {courseData:[]};
-    connection.query('select * from course_info natural join shopping_cart where sid=?', [sid], function(error, results, fields) {
+    connection.query('SELECT * FROM shopping_cart WHERE sid = ?', [sid], function(error, results, fields) {
         if (results.length > 0) {
             for (var i=0;i<results.length;i++) {
                 var dt = {};
                 dt["course_id"] = results[i].course_id;
                 dt["session_id"] = results[i].session_id;
-                dt["credit"] = results[i].credit;
+                dt["tutorial_id"] = results[i].tutorial_id;
                 res.courseData.push(dt);
             }
             response.json(res);
@@ -372,225 +364,4 @@ function getTimeTable(request, response) {
             response.json(res);
         }
     });
-}
-
-app.post('/coursePlan', getCoursePlanTimeTable);
-function getCoursePlanTimeTable (request, response) {
-    /*
-    TODO: select just one plan
-     */
-    var ret = {courseData: []};
-    var idx = global.course_plan_default_index;
-    if (idx > 0) {
-        idx -= 1;
-    }
-    connection.query("select * from course_plan where sid=? and plan_index=?", [global.sid, idx], function (err, res, f) {
-        ret["courseData"] = JSON.parse(JSON.stringify(res));
-        response.json(ret);
-    })
-}
-
-/* generate plan */
-app.post('/generatePlan', generatePlan);
-function generatePlan (request, response) {
-    /*
-    coursedData: array of [course_id, session_id, preference]
-     */
-    var res = request.body.courseData;
-    var ret = [];
-    for (var i=0;i<res.length;i++) {
-        res[i]["tutorial_info"] = [];
-    }
-
-    connection.query('select session_id, session_start_time_1, session_start_time_2, session_start_time_3, session_end_time_1, session_end_time_2, session_end_time_3, session_tutorial_list.tutorial_id, tutorial_start_time_1, tutorial_end_time_1 ' +
-        'from session_info natural join session_tutorial_list left join tutorial_info on tutorial_info.tutorial_id=session_tutorial_list.tutorial_id ', [], function(error, results, fields) {
-        if (results.length > 0) {
-            for (var i=0;i<results.length;i++) {
-                for (var j=0;j<res.length;j++) {
-                    if (res[j]["session_id"] === results[i].session_id) {
-                        /*
-                        this part information can be overwritten if one session has many tutorial options
-                         */
-                        if (results[i].session_start_time_1 === null) {
-                            res[j]["session_start_time_1"] = 0
-                        }
-                        else {
-                            res[j]["session_start_time_1"] = results[i].session_start_time_1.getTime() / global.time_convert;
-                        }
-
-                        if (results[i].session_start_time_2 === null) {
-                            res[j]["session_start_time_2"] = 0
-                        }
-                        else {
-                            res[j]["session_start_time_2"] = results[i].session_start_time_2.getTime() / global.global.time_convert;
-                        }
-
-                        if (results[i].session_start_time_3 === null) {
-                            res[j]["session_start_time_3"] = 0
-                        }
-                        else {
-                            res[j]["session_start_time_3"] = results[i].session_start_time_3.getTime() / global.global.time_convert;
-                        }
-
-                        if (results[i].session_end_time_1 === null) {
-                            res[j]["session_end_time_1"] = 0
-                        }
-                        else {
-                            res[j]["session_end_time_1"] = results[i].session_end_time_1.getTime() / global.global.time_convert;
-                        }
-
-                        if (results[i].session_end_time_2 === null) {
-                            res[j]["session_end_time_2"] = 0
-                        }
-                        else {
-                            res[j]["session_end_time_2"] = results[i].session_end_time_2.getTime() / global.global.time_convert;
-                        }
-
-                        if (results[i].session_end_time_3 === null) {
-                            res[j]["session_end_time_3"] = 0
-                        }
-                        else {
-                            res[j]["session_end_time_3"] = results[i].session_end_time_3.getTime() / global.global.time_convert;
-                        }
-
-                        /*
-                        res[j]["session_start_time_1"] = results[i].session_start_time_1;
-                        res[j]["session_start_time_2"] = results[i].session_start_time_2;
-                        res[j]["session_start_time_3"] = results[i].session_start_time_3;
-                        res[j]["session_end_time_1"] = results[i].session_end_time_1;
-                        res[j]["session_end_time_2"] = results[i].session_end_time_2;
-                        res[j]["session_end_time_3"] = results[i].session_end_time_3;
-                         */
-
-                        /*
-                        unique to tutorial
-                         */
-                        var tut = {};
-                        tut["tutorial_id"] = results[i].tutorial_id;
-                        tut["tutorial_start_time_1"] = results[i].tutorial_start_time_1.getTime() / global.global.time_convert;
-                        tut["tutorial_end_time_1"] = results[i].tutorial_end_time_1.getTime() / global.global.time_convert;
-                        tut["is_valid"] = "true";
-                        res[j]["tutorial_info"].push(tut);
-                    }
-                }
-            }
-
-            /*
-            generate plan
-             */
-            for(var i=0;i<res.length;i++) {
-                var conflict = "false";
-                for (var j=0;j<ret.length;j++) {
-                    /*
-                    check session time conflict
-                    */
-                    if (res[i]["session_start_time_1"] !== 0) {
-                        if (ret[j]["session_start_time_1"] !== 0 && !(res[i]["session_start_time_1"] >= ret[j]["session_end_time_1"] || res[i]["session_end_time_1"] <= ret[j]["session_start_time_1"])) {
-                            conflict = "true";
-                            break;
-                        }
-                        if (ret[j]["session_start_time_2"] !== 0 && !(res[i]["session_start_time_1"] >= ret[j]["session_end_time_2"] || res[i]["session_end_time_1"] <= ret[j]["session_start_time_2"])) {
-                            conflict = "true";
-                            break;
-                        }
-                        if (ret[j]["session_start_time_3"] !== 0 && !(res[i]["session_start_time_1"] >= ret[j]["session_end_time_3"] || res[i]["session_end_time_1"] <= ret[j]["session_start_time_3"])) {
-                            conflict = "true";
-                            break;
-                        }
-                    }
-
-                    if (res[i]["session_start_time_2"] !== 0) {
-                        if (ret[j]["session_start_time_1"] !== 0 && !(res[i]["session_start_time_2"] >= ret[j]["session_end_time_1"] || res[i]["session_end_time_2"] <= ret[j]["session_start_time_1"])) {
-                            conflict = "true";
-                            break;
-                        }
-                        if (ret[j]["session_start_time_2"] !== 0 && !(res[i]["session_start_time_2"] >= ret[j]["session_end_time_2"] || res[i]["session_end_time_2"] <= ret[j]["session_start_time_2"])) {
-                            conflict = "true";
-                            break;
-                        }
-                        if (ret[j]["session_start_time_3"] !== 0 && !(res[i]["session_start_time_2"] >= ret[j]["session_end_time_3"] || res[i]["session_end_time_2"] <= ret[j]["session_start_time_3"])) {
-                            conflict = "true";
-                            break;
-                        }
-                    }
-
-                    if (res[i]["session_start_time_3"] !== 0) {
-                        if (ret[j]["session_start_time_1"] !== 0 && !(res[i]["session_start_time_3"] >= ret[j]["session_end_time_1"] || res[i]["session_end_time_3"] <= ret[j]["session_start_time_1"])) {
-                            conflict = "true";
-                            break;
-                        }
-                        if (ret[j]["session_start_time_2"] !== 0 && !(res[i]["session_start_time_3"] >= ret[j]["session_end_time_2"] || res[i]["session_end_time_3"] <= ret[j]["session_start_time_2"])) {
-                            conflict = "true";
-                            break;
-                        }
-                        if (ret[j]["session_start_time_3"] !== 0 && !(res[i]["session_start_time_3"] >= ret[j]["session_end_time_3"] || res[i]["session_end_time_3"] <= ret[j]["session_start_time_3"])) {
-                            conflict = "true";
-                            break;
-                        }
-                    }
-
-                    /*
-                    check tutorial time conflict
-                     */
-                    var tmp = "true";
-                    for (var k=0;k<res[i]["tutorial_info"].length;k++) {
-                        if (res[i]["tutorial_info"][k]["is_valid"] === "true" && !(res[i]["tutorial_info"][k]["tutorial_end_time_1"] <= ret[j]["tutorial_info"]["tutorial_start_time_1"] || res[i]["tutorial_info"][k]["tutorial_start_time_1"] >= ret[j]["tutorial_info"]["tutorial_end_time_1"])) {
-                            res[i]["tutorial_info"][k]["is_valid"] = "false";
-                        }
-                    }
-                    for (var k=0;k<res[i]["tutorial_info"].length;k++) {
-                        if (res[i]["tutorial_info"][k]["is_valid"] === "true") {
-                            tmp = "false";
-                            break;
-                        }
-                    }
-                    if (tmp === "true") {
-                        conflict = "true";
-                        break;
-                    }
-                }
-
-                if (conflict === "false") {
-                    for (var w=0;w<res[i]["tutorial_info"].length;w++) {
-                        if (res[i]["tutorial_info"][w]["is_valid"] === "true") {
-                            ret.push(res[i]);
-                            ret[ret.length-1]["tutorial_info"] = {tutorial_id: res[i]["tutorial_info"][w]["tutorial_id"], tutorial_start_time_1: res[i]["tutorial_info"][w]["tutorial_start_time_1"], tutorial_end_time_1: res[i]["tutorial_info"][w]["tutorial_end_time_1"]};
-                        }
-                    }
-
-                }
-
-            }
-
-
-            for(var i=0;i<ret.length;i++) {
-                ret[i]["session_start_time_1"] = new Date(ret[i]["session_start_time_1"] * global.time_convert);
-                ret[i]["session_start_time_2"] = new Date(ret[i]["session_start_time_2"] * global.time_convert);
-                ret[i]["session_start_time_3"] = new Date(ret[i]["session_start_time_3"] * global.time_convert);
-                ret[i]["session_end_time_1"] = new Date(ret[i]["session_end_time_1"] * global.time_convert);
-                ret[i]["session_end_time_2"] = new Date(ret[i]["session_end_time_2"] * global.time_convert);
-                ret[i]["session_end_time_3"] = new Date(ret[i]["session_end_time_3"] * global.time_convert);
-                ret[i]["tutorial_info"]["tutorial_start_time_1"] = new Date(ret[i]["tutorial_info"]["tutorial_start_time_1"] * global.time_convert);
-                ret[i]["tutorial_info"]["tutorial_end_time_1"] = new Date(ret[i]["tutorial_info"]["tutorial_end_time_1"] * global.time_convert);
-            }
-            /*
-            for now, just save the plan
-            TODO: 1. user choose to save the plan or not
-                  2. generate multiple plans
-             */
-            for(var i=0;i<ret.length;i++) {
-
-                connection.query("insert into course_plan values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [ret[i]["course_id"], ret[i]["session_id"], ret[i]["credit"], ret[i]["preference"],
-                    ret[i]["tutorial_info"]["tutorial_id"], ret[i]["tutorial_info"]["tutorial_start_time_1"], ret[i]["tutorial_info"]["tutorial_end_time_1"],
-                    ret[i]["session_start_time_1"], ret[i]["session_start_time_2"], ret[i]["session_start_time_3"],
-                    ret[i]["session_end_time_1"], ret[i]["session_end_time_2"], ret[i]["session_end_time_3"], global.sid, global.course_plan_default_index]);
-            }
-
-            global.course_plan_default_index += 1;
-            response.json(ret);
-        } else {
-            response.json(ret);
-        }
-    });
-
 }
