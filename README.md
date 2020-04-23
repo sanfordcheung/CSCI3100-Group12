@@ -36,7 +36,7 @@ which is used in this project. <br />
 
 3 - In the course search page, click button `search` to get all the courses listed in the table.
 Click `Add` or `Remove` to add/remove courses to/from shopping cart. Click on the table to see
-detailed information. Click on the table head to sort. 
+detailed information. Click on the table head to sort. You can also sort course by Ranking, or use Filter to filter unwanted result.
 ![N|Solid](screenshot/ss-course-search.png)
 <br><br>
 
