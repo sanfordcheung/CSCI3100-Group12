@@ -17,114 +17,137 @@ document.addEventListener('DOMContentLoaded', function() {
 
 $(document).ready(function() {
     $('#courseSearchEnter').click(function () {
+        //console.log(document.getElementById("user-sid").innerText);
         var word = document.getElementById("courseSearchInput").value;
         $.ajax('/courseSearch', {
             type: 'POST',
             data: {keyword: word}
         }).done(function (re) {
-
-            $.ajax('/inShoppingCart', {
+            $.ajax('/isEnrolled', {
                 type: 'POST',
                 data: {courseData: re.courseData}
-            }).done(function (response) {
-                $('#courseSearchBody').empty();
+            }).done(function(re1) {
+                $.ajax('/inShoppingCart', {
+                    type: 'POST',
+                    data: {courseData: re1}
+                }).done(function(re2) {
+                    $.ajax('/needPrerequisite', {
+                        type: 'POST',
+                        data: {courseData: re2}
+                    }).done(function (response) {
+                        $('#courseSearchBody').empty();
+                        //console.log($('#enrolled-filter').is(':checked'));
+                        var is_enrolled_filter_on = $('#enrolled-filter').is(':checked');
+                        var is_shopping_cart_filter_on = $('#shopping-cart-filter').is(':checked');
+                        var is_prerequisite_filter_on = $('#prerequisite-filter').is(':checked');
+                        for (var i=0;i<response.length;i++) {
+                            console.log(response[i]["need_prerequisite"]);
+                            if(is_enrolled_filter_on == true && response[i]["is_enrolled"] === 'true')
+                                continue;
+                            if(is_shopping_cart_filter_on == true && response[i]["in_shopping_cart"] === 'true')
+                                continue;
+                            if(is_prerequisite_filter_on == true && response[i]["need_prerequisite"] === 'true')
+                                continue;
+                            var tr = $('<tr class = "mainRow"></tr>').click(function(){
+                                $(this).next('div.information').slideToggle(400);
+                            });
 
-                for (var i=0;i<response.length;i++) {
-                    var tr = $('<tr class = "mainRow"></tr>').click(function(){
-                        $(this).next('div.information').slideToggle(400);
+                            tr.append($('<td></td>').text(response[i]["course_id"]));
+                            tr.append($('<td></td>').text(response[i]["course_name"].slice(0, course_name_length)));
+                            tr.append($('<td></td>').text(response[i]["credit"]));
+                            var cn = "btn btn-inverse-success btn-fw";
+                            var innertxt = "Add";
+                            //console.log(i);
+                            //console.log(response[i]["is_enrolled"]);
+                            if (response[i]["in_shopping_cart"] === "true") {
+                                cn = "btn btn-inverse-warning btn-fw";
+                                innertxt = "Remove";
+                            }
+
+                            $('#courseSearchBody').append(tr);
+
+                            var info = $('<div class = "information" style = "float: left;"></div>');
+                            info.hide();
+                            info.append('<h6 style = "font-weight: bold;">Detailed Information</h6>');
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Session No.: </span>'+response[i]["session_id"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Lecturer: </span>'+response[i]["lecturer"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Department: </span>'+response[i]["department"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Venues: </span>'+'(1)'+response[i]["venue_1"].slice(0, course_name_length)+' (2)'+ response[i]["venue_2"].slice(0, course_name_length)+' (3)'+response[i]["venue_3"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Session start time: </span>'+'(1)'+response[i]["session_start_time_1"].slice(0, course_name_length)+' (2)'+ response[i]["session_start_time_2"].slice(0, course_name_length)+' (3)'+response[i]["session_start_time_3"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Session end time: </span>'+'(1)'+response[i]["session_end_time_1"].slice(0, course_name_length)+' (2)'+ response[i]["session_end_time_2"].slice(0, course_name_length)+' (3)'+response[i]["session_end_time_3"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Quota: </span>'+response[i]["quota"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Vacancy: </span>'+response[i]["vacancy"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Evaluation: </span>'+response[i]["evaluation"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Popularity: </span>'+response[i]["popularity"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Successfully register rate: </span>'+response[i]["func"].slice(0, course_name_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Comment: </span>'+response[i]["comment"].slice(0, schedule_length)));
+                            info.append($('<p></p>').html('<span style = "font-weight: bold;">Schedule: </span>'+response[i]["schedule"].slice(0, schedule_length)));
+                            $('#courseSearchBody').append(info);
+
+                            var btns = $('<div class = "buttons"></div>');
+
+                            if (innertxt === "Add") {
+                                btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Add</button>').click(function () {
+                                    let id = this.id.toString();
+                                    let btn = document.getElementById(id);
+                                    if (btn.classList.contains("btn-inverse-success")) {
+                                        btn.classList.remove("btn-inverse-success");
+                                        btn.classList.add("btn-inverse-warning");
+                                        btn.innerText = "Remove";
+                                        $.ajax('/addRemoveCourse', {
+                                            type: 'POST',
+                                            data: {sessionID: this.id, addCourse: "true"}
+                                        }).done(function (response) {
+                                        });
+                                    } else {
+                                        btn.classList.remove("btn-inverse-warning");
+                                        btn.classList.add("btn-inverse-success");
+                                        btn.innerText = "Add";
+                                        $.ajax('/addRemoveCourse', {
+                                            type: 'POST',
+                                            data: {sessionID: this.id, addCourse: "false"}
+                                        }).done(function (response) {
+                                        });
+                                    }
+
+                                }));
+                            }
+                            else {
+                                btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
+                                    let id = this.id.toString();
+                                    let btn = document.getElementById(id);
+                                    if (btn.classList.contains("btn-inverse-success")) {
+                                        btn.classList.remove("btn-inverse-success");
+                                        btn.classList.add("btn-inverse-warning");
+                                        btn.innerText = "Remove";
+                                        $.ajax('/addRemoveCourse', {
+                                            type: 'POST',
+                                            data: {sessionID: this.id, addCourse: "true"}
+                                        }).done(function (response) {
+                                        });
+                                    } else {
+                                        btn.classList.remove("btn-inverse-warning");
+                                        btn.classList.add("btn-inverse-success");
+                                        btn.innerText = "Add";
+                                        $.ajax('/addRemoveCourse', {
+                                            type: 'POST',
+                                            data: {sessionID: this.id, addCourse: "false"}
+                                        }).done(function (response) {
+                                        });
+                                    }
+
+                                }));
+                            }
+
+                            $('#courseSearchBody').append(btns);
+
+                        }
+
                     });
 
-                    tr.append($('<td></td>').text(response[i]["course_id"]));
-                    tr.append($('<td></td>').text(response[i]["course_name"].slice(0, course_name_length)));
-                    tr.append($('<td></td>').text(response[i]["credit"]));
-                    var cn = "btn btn-inverse-success btn-fw";
-                    var innertxt = "Add";
-
-                    if (response[i]["in_shopping_cart"] === "true") {
-                        cn = "btn btn-inverse-warning btn-fw";
-                        innertxt = "Remove";
-                    }
-
-                    $('#courseSearchBody').append(tr);
-                    var info = $('<div class = "information" style = "float: left;"></div>');
-                    info.hide();
-                    info.append('<h6 style = "font-weight: bold;">Detailed Information</h6>');
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Session No.: </span>'+response[i]["session_id"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Lecturer: </span>'+response[i]["lecturer"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Department: </span>'+response[i]["department"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Venues: </span>'+'(1)'+response[i]["venue_1"].slice(0, course_name_length)+' (2)'+ response[i]["venue_2"].slice(0, course_name_length)+' (3)'+response[i]["venue_3"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Session start time: </span>'+'(1)'+response[i]["session_start_time_1"].slice(0, course_name_length)+' (2)'+ response[i]["session_start_time_2"].slice(0, course_name_length)+' (3)'+response[i]["session_start_time_3"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Session end time: </span>'+'(1)'+response[i]["session_end_time_1"].slice(0, course_name_length)+' (2)'+ response[i]["session_end_time_2"].slice(0, course_name_length)+' (3)'+response[i]["session_end_time_3"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Quota: </span>'+response[i]["quota"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Vacancy: </span>'+response[i]["vacancy"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Evaluation: </span>'+response[i]["evaluation"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Popularity: </span>'+response[i]["popularity"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Successfully register rate: </span>'+response[i]["func"].slice(0, course_name_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Comment: </span>'+response[i]["comment"].slice(0, schedule_length)));
-                    info.append($('<p></p>').html('<span style = "font-weight: bold;">Schedule: </span>'+response[i]["schedule"].slice(0, schedule_length)));
-                    $('#courseSearchBody').append(info);
-                    var btns = $('<div class = "buttons"></div>');
-
-                    if (innertxt === "Add") {
-                        btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Add</button>').click(function () {
-                            let id = this.id.toString();
-                            let btn = document.getElementById(id);
-                            if (btn.classList.contains("btn-inverse-success")) {
-                                btn.classList.remove("btn-inverse-success");
-                                btn.classList.add("btn-inverse-warning");
-                                btn.innerText = "Remove";
-                                $.ajax('/addRemoveCourse', {
-                                    type: 'POST',
-                                    data: {sessionID: this.id, addCourse: "true"}
-                                }).done(function (response) {
-                                });
-                            } else {
-                                btn.classList.remove("btn-inverse-warning");
-                                btn.classList.add("btn-inverse-success");
-                                btn.innerText = "Add";
-                                $.ajax('/addRemoveCourse', {
-                                    type: 'POST',
-                                    data: {sessionID: this.id, addCourse: "false"}
-                                }).done(function (response) {
-                                });
-                            }
-
-                        }));
-                    }
-                    else {
-                        btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
-                            let id = this.id.toString();
-                            let btn = document.getElementById(id);
-                            if (btn.classList.contains("btn-inverse-success")) {
-                                btn.classList.remove("btn-inverse-success");
-                                btn.classList.add("btn-inverse-warning");
-                                btn.innerText = "Remove";
-                                $.ajax('/addRemoveCourse', {
-                                    type: 'POST',
-                                    data: {sessionID: this.id, addCourse: "true"}
-                                }).done(function (response) {
-                                });
-                            } else {
-                                btn.classList.remove("btn-inverse-warning");
-                                btn.classList.add("btn-inverse-success");
-                                btn.innerText = "Add";
-                                $.ajax('/addRemoveCourse', {
-                                    type: 'POST',
-                                    data: {sessionID: this.id, addCourse: "false"}
-                                }).done(function (response) {
-                                });
-                            }
-
-                        }));
-                    }
-
-                    $('#courseSearchBody').append(btns);
-
-                }
-
+                }) ;
             });
-
-        }) ;
+        });
     });
 
     $('#vacancy-btn').click(function () {

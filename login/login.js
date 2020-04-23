@@ -309,6 +309,40 @@ function isEnrolled(request, response){
     });
 }
 
+/* check if search result courses need prerequisite */
+app.post("/needPrerequisite", needPrerequisite);
+function needPrerequisite(request, response){
+    var res = request.body.courseData;
+    for (var i=0; i<res.length;i++){
+        res[i]["need_prerequisite"] = "false";
+    }
+    connection.query("select * from prerequisite_list", function(error, results, fields) {
+        if (results.length > 0) {
+            for (var i=0;i<results.length;i++) {
+                for (var j=0;j<res.length;j++) {
+                    if (results[i].course_id === res[j]["course_id"]) {
+                        res[j]["need_prerequisite"] = "true";
+                        break;
+                    }
+                }
+            }
+        }
+    });
+    connection.query("select course_history.course_id as course_id, prerequisite_list.course_id as fulfilling, prerequisite_list.group from course_history left join prerequisite_list on course_history.course_id = prerequisite_list.prerequisite_id where sid=?", [global.sid], function(error, results, fields) {
+        if (results.length > 0) {
+            for (var i=0;i<results.length;i++) {
+                for (var j=0;j<res.length;j++) {
+                    if (results[i].fulfilling === res[j]["course_id"]) {
+                        res[j]["need_prerequisite"] = "false";
+                        break;
+                    }
+                }
+            }
+        }
+        response.json(res);
+    });
+}
+
 /* Add/Remove course to/from shopping cart */
 app.post("/addRemoveCourse", addRemoveCourse);
 function addRemoveCourse(request, response) {
