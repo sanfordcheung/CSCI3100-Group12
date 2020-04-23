@@ -28,28 +28,22 @@ Group12 project for CUHK CSCI3100 course
 ![N|Solid](screenshot/ss-login.png)
 <br><br>
 
-2 - In the index page, you can see some templates for you to use in your design. For more UI templates,
-refer to [StarAdmin Bootstrap Template](https://github.com/BootstrapDash/StarAdmin-Free-Bootstrap-Admin-Template)
-which is used in this project. <br />
-![N|Solid](screenshot/ss-index.png)
-<br><br>
-
-3 - In the course search page, click button `search` to get all the courses listed in the table.
+2 - In the course search page, click button `search` to get all the courses listed in the table.
 Click `Add` or `Remove` to add/remove courses to/from shopping cart. Click on the table to see
 detailed information. Click on the table head to sort. You can also sort course by Ranking, or use Filter to filter unwanted result.
 ![N|Solid](screenshot/ss-course-search.png)
 <br><br>
 
-4 - In the plan generation page, you can drag and put the cou rses. Click on `Get Plan` to generate
+3 - In the plan generation page, you can drag and put the cou rses. Click on `Get Plan` to generate
 course plan in which no time conflicts exist.
 ![N|Solid](screenshot/ss-plan-generate.png)
 <br><br>
 
-5- In the shopping cart page, you can see the timetable with courses in shopping cart drawn on it.
+4 - In the shopping cart page, you can see the timetable with courses in shopping cart drawn on it.
 ![N|Solid](screenshot/ss-shopping-cart.png)
 <br><br>
 
-6 - In the course plan page, you can see the timetable with courses in course plan drawn on it.
+5 - In the course plan page, you can see the timetable with courses in course plan drawn on it.
 ![N|Solid](screenshot/ss-course-plan.png)
 
 <h2>Get started</h2>
@@ -64,7 +58,8 @@ Remember to change the database connection settings (username, password) in the 
 <h2>Updates</h2>
 
 - 2020-04-22 <br>
-Implement Ranking
+Implement Ranking. <br>
+Implement Filters.
 
 - 2020-04-21 <br>
 Implement plan generation. <br>
@@ -95,11 +90,6 @@ left slider are common in every pages.
 - Avatar
 - Preference
 
-<h4>Shopping Cart</h4>
-
-- change `tutorial_id` attribute to `credit` attribute
-- optimize add/remove course to/from shopping_cart functionality
-
 <h3>Course search module </h3>
 
 <h4>Search </h4>
@@ -107,23 +97,6 @@ left slider are common in every pages.
 - *realtime feedback 
 - *adaptive search
 
-<h4>Filter</h4>
-
-- Enrolled/Passed Courses
-- *Duplicated Courses
-- Shopping Cart Courses
-- Time Clash Courses
-- pre/co-requisite
-
-<h4>Ranking</h4>
-
-- Vacancy
-- Students' evaluation
-- popularity: number of people who have added the course into his/her shopping_cart
-- Successful registration rate: `(p = popularity * 5 + 30)`  
-`1`,(vacancy >= p * 0.9, vacancy > 0)   
-`vacancy/(p*0.9)`,(vacancy < p * 0.9)   
-`0`,(p = 0) 
 <h3>Plan Generate Module</h3>
 
 - refinement: now only one plan can be generated when the user press `Get Plan`
