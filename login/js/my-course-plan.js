@@ -1,3 +1,5 @@
+let course_name_length = 50;
+
 document.addEventListener('DOMContentLoaded', function() {
     var eventData = {
         events : []
@@ -8,6 +10,29 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {},
         datatype: 'json',
         success: function (response) {
+            $('#coursePlanBody').empty();
+            for(var i = 0; i<response.courseData.length; i++){
+                var tr = $('<tr class = "mainRow"></tr>').click(function(){
+                    $(this).next('div.information').slideToggle(400);
+                });
+                tr.append($('<td></td>').text(response.courseData[i]["course_id"]));
+                tr.append($('<td></td>').text(response.courseData[i]["session_id"]));
+                tr.append($('<td></td>').text(response.courseData[i]["credit"]));
+                tr.append($('<td></td>').text(response.courseData[i]["preference"]));
+                $('#coursePlanBody').append(tr);
+                
+                var info = $('<div class = "information" style = "float: left;"></div>');
+                info.hide();
+                info.append('<h6 style = "font-weight: bold;">Detailed Information</h6>');
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Tutorial ID: </span>'+response.courseData[i]["tutorial_id"].slice(0, course_name_length)));
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Tutorial start time: </span>'+response.courseData[i]["tutorial_start_time_1"].slice(0, course_name_length)));
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Tutorial end time: </span>'+response.courseData[i]["tutorial_end_time_1"].slice(0, course_name_length)));
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Session start time: </span>'+'(1)'+response.courseData[i]["session_start_time_1"].slice(0, course_name_length)+' (2)'+ response.courseData[i]["session_start_time_2"].slice(0, course_name_length)+' (3)'+response.courseData[i]["session_start_time_3"].slice(0, course_name_length)));
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Session end time: </span>'+'(1)'+response.courseData[i]["session_end_time_1"].slice(0, course_name_length)+' (2)'+ response.courseData[i]["session_end_time_2"].slice(0, course_name_length)+' (3)'+response.courseData[i]["session_end_time_3"].slice(0, course_name_length)));
+                $('#coursePlanBody').append(info);
+                var btns = $('<div class = "buttons"></div>');
+            }
+
             for (var i = 0; i < response.courseData.length; i++) {
                 var event1 = {}, event2 = {}, event3 = {};
                 event1['start'] = new Date(response.courseData[i]["session_start_time_1"]);

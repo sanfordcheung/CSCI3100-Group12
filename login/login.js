@@ -18,7 +18,7 @@ global.course_plan_default_index = 0; // TODO: load course plan index from cours
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '',
+	password : '123456',
 	database : 'cusisdbBeta'
 });
 
@@ -128,7 +128,7 @@ function register(request, response) {
                 });
 
                 let mailOptions = {
-                from: '"Charles-Kuang" <k1155124427@gmail.com>', // sender address
+                from: '"CU Reg Course" <k1155124427@gmail.com>', // sender address
                 to: email, // list of receivers
                 subject: 'Register Confirmation', // Subject line
                 // ·¢ËÍtext»òÕßhtml¸ñÊ½
