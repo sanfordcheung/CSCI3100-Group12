@@ -1,6 +1,6 @@
-<h1>CSCI3100-Group12</h1>
+<h1>CSCI3100-Group12 CU Register Course Assistant</h1>
 
-Group12 project for CUHK CSCI3100 course
+CUHK CSCI3100 Group12 course project
 
 <h2>Dependency</h2>
 
