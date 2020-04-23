@@ -12,7 +12,7 @@ global.inShoppingCart = false;
 global.code = "12345678";
 global.confirm = "0";
 global.time_convert = 1000;
-global.max_credits_per_term = 19;
+global.max_credits_per_term = 190;
 global.course_plan_next_index = 0;
 
 var connection = mysql.createConnection({
