@@ -20,15 +20,55 @@ document.addEventListener('DOMContentLoaded', function() {
                 tr.append($('<td></td>').text(response.courseData[i]["credit"]));
                 tr.append($('<td></td>').text(response.courseData[i]["preference"]));
                 $('#coursePlanBody').append(tr);
-                
+
                 var info = $('<div class = "information" style = "float: left;"></div>');
                 info.hide();
                 info.append('<h6 style = "font-weight: bold;">Detailed Information</h6>');
+                var t_s_1;
+                var t_e_1;
+                var s_s_1;
+                var s_e_1;
+                var s_s_2;
+                var s_e_2;
+                var s_s_3;
+                var s_e_3;
+                if(response.courseData[i]["tutorial_start_time_1"] == "1970-01-01T00:00:00.000Z")
+                    t_s_1 = " ";
+                else
+                    t_s_1 = response.courseData[i]["tutorial_start_time_1"];
+                if(response.courseData[i]["tutorial_end_time_1"] == "1970-01-01T00:00:00.000Z")
+                    t_e_1 = " ";
+                else
+                    t_e_1 = response.courseData[i]["tutorial_end_time_1"];
+                if(response.courseData[i]["session_start_time_1"] == "1970-01-01T00:00:00.000Z")
+                    s_s_1 = " ";
+                else
+                    s_s_1 = response.courseData[i]["session_start_time_1"];
+                if(response.courseData[i]["session_end_time_1"] == "1970-01-01T00:00:00.000Z")
+                    s_e_1 = " ";
+                else
+                    s_e_1 = response.courseData[i]["session_end_time_1"];
+                if(response.courseData[i]["session_start_time_2"] == "1970-01-01T00:00:00.000Z")
+                    s_s_2 = " ";
+                else
+                    s_s_2 = response.courseData[i]["session_start_time_2"];
+                if(response.courseData[i]["session_end_time_2"] == "1970-01-01T00:00:00.000Z")
+                    s_e_2 = " ";
+                else
+                    s_e_2 = response.courseData[i]["session_end_time_2"];
+                if(response.courseData[i]["session_start_time_3"] == "1970-01-01T00:00:00.000Z")
+                    s_s_3 = " ";
+                else
+                    s_s_3 = response.courseData[i]["session_start_time_3"];
+                if(response.courseData[i]["session_end_time_3"] == "1970-01-01T00:00:00.000Z")
+                    s_e_3 = " ";
+                else
+                    s_e_3 = response.courseData[i]["session_end_time_3"];
                 info.append($('<p></p>').html('<span style = "font-weight: bold;">Tutorial ID: </span>'+response.courseData[i]["tutorial_id"].slice(0, course_name_length)));
-                info.append($('<p></p>').html('<span style = "font-weight: bold;">Tutorial start time: </span>'+response.courseData[i]["tutorial_start_time_1"].slice(0, course_name_length)));
-                info.append($('<p></p>').html('<span style = "font-weight: bold;">Tutorial end time: </span>'+response.courseData[i]["tutorial_end_time_1"].slice(0, course_name_length)));
-                info.append($('<p></p>').html('<span style = "font-weight: bold;">Session start time: </span>'+'(1)'+response.courseData[i]["session_start_time_1"].slice(0, course_name_length)+' (2)'+ response.courseData[i]["session_start_time_2"].slice(0, course_name_length)+' (3)'+response.courseData[i]["session_start_time_3"].slice(0, course_name_length)));
-                info.append($('<p></p>').html('<span style = "font-weight: bold;">Session end time: </span>'+'(1)'+response.courseData[i]["session_end_time_1"].slice(0, course_name_length)+' (2)'+ response.courseData[i]["session_end_time_2"].slice(0, course_name_length)+' (3)'+response.courseData[i]["session_end_time_3"].slice(0, course_name_length)));
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Tutorial start time: </span>'+t_s_1));
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Tutorial end time: </span>'+t_e_1));
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Session start time: </span>'+'(1)'+s_s_1+' (2)'+ s_s_2+' (3)'+s_s_3));
+                info.append($('<p></p>').html('<span style = "font-weight: bold;">Session start time: </span>'+'(1)'+s_e_1+' (2)'+ s_e_2+' (3)'+s_e_3));
                 $('#coursePlanBody').append(info);
                 var btns = $('<div class = "buttons"></div>');
             }

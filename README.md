@@ -87,6 +87,7 @@ left slider are common in every pages.
 
 <h4>User information</h4>
 
+- After signing out, prevent getting user info by clicking return button on browser.
 - Avatar
 - Preference
 
