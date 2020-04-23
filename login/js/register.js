@@ -13,8 +13,7 @@ $(document).ready(function() {
         }).done(function (response) {
             alert(response);
         $.ajax('/registerRedirect', {
-            type: 'POST',
-            data: {sid:"sid"}
+            type: 'POST'
         }).done(function (response) {
         });
             

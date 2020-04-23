@@ -7,11 +7,6 @@ $(document).ready(function() {
             data: {code:code}
         }).done(function (response) {
             alert(response);
-            $.ajax('/confirmRedirect', {
-                type: 'POST',
-                data: {code:"code"}
-            }).done(function (response) {
-            });
         });
     });
 });
