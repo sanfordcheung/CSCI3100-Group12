@@ -16,6 +16,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(document).ready(function() {
+    $("#Signout").on('click', function() {
+        alert("You've successfully sign out!");
+        $.ajax('/ClearInfo', {
+            type: 'POST'
+        }).done(function(response) {}
+        );
+        window.location = "../login.html";
+      });
+
+
     $('#courseSearchEnter').click(function () {
         //console.log(document.getElementById("user-sid").innerText);
         var word = document.getElementById("courseSearchInput").value;

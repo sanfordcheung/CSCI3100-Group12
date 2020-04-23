@@ -1,3 +1,16 @@
+$(document).ready(function() {
+    $("#Signout").click(function() {
+        alert("You've successfully sign out!");
+        $.ajax({
+            url: '/ClearInfo',
+            type: 'POST',
+        success: function(response){
+            window.location = "../login.html";
+        }
+      });
+    });
+})
+
 document.addEventListener('DOMContentLoaded', function() {
     var word = 0;
     var eventData = {

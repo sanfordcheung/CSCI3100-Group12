@@ -1,4 +1,13 @@
 $(document).ready(function() {
+    $("#Signout").on('click', function() {
+        alert("You've successfully sign out!");
+        $.ajax('/ClearInfo', {
+            type: 'POST'
+        }).done(function(response) {}
+        );
+        window.location = "../login.html";
+      });
+      
     $('#getPlan').click(function () {
         var table = document.getElementById("shoppingCartBody");
         var innerData = [];

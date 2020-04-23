@@ -1,4 +1,14 @@
-
+$(document).ready(function() {
+    $("#Signout").on('click', function() {
+        alert("You've successfully sign out!");
+        $.ajax('/ClearInfo', {
+            type: 'POST'
+        }).done(function(response) {}
+        );
+        window.location = "../login.html";
+      });
+    });
+    
 document.addEventListener('DOMContentLoaded', function() {
     $.ajax('/userInfo', {
         type: 'POST'

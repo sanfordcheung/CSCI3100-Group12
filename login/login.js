@@ -18,7 +18,7 @@ global.course_plan_next_index = 0;
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '',
+	password : '123456',
 	database : 'cusisdbBeta'
 });
 
@@ -38,6 +38,24 @@ app.use(express.json({limit: '50mb', extended: true}));
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/login.html'));
 });
+
+
+app.post('/ClearInfo', ClearInfo);
+function ClearInfo(request,response){
+    global.sid = "0";
+    global.username = "Jimmy";
+    global.email = "Jimmy@gmail.com";
+    global.loggedin = false;
+    global.inShoppingCart = false;
+    global.code = "12345678";
+    global.confirm = "0";
+    global.time_convert = 1000;
+    global.max_credits_per_term = 19;
+    global.course_plan_default_index = 0;
+    response.send('Clear now');
+    response.end();
+} 
+
 
 app.post('/auth', loginAuthenticate);
 

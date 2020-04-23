@@ -57,6 +57,9 @@ Remember to change the database connection settings (username, password) in the 
 
 <h2>Updates</h2>
 
+- 2020-04-24 <br>
+After signing out, user's information are all cleared. <br>
+
 - 2020-04-22 <br>
 Implement Ranking. <br>
 Implement Filters.
@@ -87,7 +90,6 @@ left slider are common in every pages.
 
 <h4>User information</h4>
 
-- After signing out, prevent getting user info by clicking return button on browser.
 - Avatar
 - Preference
 
