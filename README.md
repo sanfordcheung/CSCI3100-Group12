@@ -2,6 +2,39 @@
 
 CUHK CSCI3100 Group12 course project
 
+<h2>Project Structure</h2>
+
+```bash
+├── README.md
+├── cusis-beta.sql
+├── login
+│   ├── css
+│   ├── fonts
+│   ├── images
+│   ├── js              This is the folder where we put our js files.
+│   ├── login.html      HTML file for login page.
+│   ├── login.js        This file contains entry point of the App and processes Get/POST requests.
+│   ├── pages           This is the folder where we put our HTML files.
+│   └── vendor          3rd-party projects.
+├── pastdoc             This folder contains deprecated files.
+│   ├── Insert\ new\ data
+│   ├── course.sql
+│   ├── cu-course.sql
+│   ├── cusisdbBeta_alternative_course.sql
+│   ├── cusisdbBeta_course_history.sql
+│   ├── cusisdbBeta_required_course.sql
+│   ├── cusisdbBeta_user.sql
+│   ├── shoppingcart.sql
+│   └── user.sql
+└── screenshot          This folder contains screenshots shown in README.MD
+    ├── ss-course-plan.png
+    ├── ss-course-search.png
+    ├── ss-index.png
+    ├── ss-login.png
+    ├── ss-plan-generate.png
+    └── ss-shopping-cart.png
+```
+
 <h2>Dependency</h2>
 
 - MySQL server
