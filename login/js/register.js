@@ -1,3 +1,9 @@
+/* USER MODULE */
+/* USER REGISTRATION FUNCTION */
+/*
+   When user click on sign up button, a POST request is sent to backend.
+   The backend (in login.js) checks whether all input information is valid.
+*/
 $(document).ready(function() {
 
     $('#SignUpEnter').click(function () {

@@ -1,3 +1,8 @@
+/* USER MODULE */
+/* USER REGISTRATION FUNCTION */
+/*
+    Validate if the confirmation code is correct.
+ */
 $(document).ready(function() {
 
     $('#ConfirmEnter').click(function () {

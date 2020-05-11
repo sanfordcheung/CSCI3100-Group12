@@ -1,4 +1,6 @@
-
+/* USER MODULE */
+/* LOGIN FUNCTION UTILITY */
+/* validate user input and implement hiding password */
 (function ($) {
     "use strict";
 
