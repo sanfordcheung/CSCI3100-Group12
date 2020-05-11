@@ -1,9 +1,12 @@
+/* COURSE SEARCH MODULE */
+
 src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
 src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"
 
 let course_name_length = 50;
 let schedule_length = 1000;
 
+/* Display user information on the website (in sidebar and also the navigator). */
 document.addEventListener('DOMContentLoaded', function() {
     $.ajax('/userInfo', {
         type: 'POST'
@@ -16,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $(document).ready(function() {
+    /* Upon signing out, erase all user information on the website. */
     $("#Signout").on('click', function() {
         alert("You've successfully sign out!");
         $.ajax('/ClearInfo', {
@@ -25,9 +29,22 @@ $(document).ready(function() {
         window.location = "../login.html";
       });
 
-
+    /*
+        COURSE SEARCH FUNCTION
+        AND
+        COURSE SEARCH FILTER
+     When user enters some keyword and clicks on the search button, a search procedure is carried out.
+     This involves 6 steps:
+     1. search for all courses whose information (course name, location, lecturer, course description, etc)
+        matches the keyword
+     2. for each course, check if it has been enrolled previously
+     3. for each course, check if it is already in shopping cart
+     4. for each course, check if it requires any pre-requisite course
+     5. if some filter is checked by user, apply this filter to search result
+     6. display the search result and fold some information (which will unfold if user wants to see these detailed stuff)
+     */
     $('#courseSearchEnter').click(function () {
-        //console.log(document.getElementById("user-sid").innerText);
+
         var word = document.getElementById("courseSearchInput").value;
         $.ajax('/courseSearch', {
             type: 'POST',
@@ -46,7 +63,9 @@ $(document).ready(function() {
                         data: {courseData: re2}
                     }).done(function (response) {
                         $('#courseSearchBody').empty();
-                        //console.log($('#enrolled-filter').is(':checked'));
+
+
+                        /* see if any filter is checked by user */
                         var is_enrolled_filter_on = $('#enrolled-filter').is(':checked');
                         var is_shopping_cart_filter_on = $('#shopping-cart-filter').is(':checked');
                         var is_prerequisite_filter_on = $('#prerequisite-filter').is(':checked');
@@ -58,6 +77,9 @@ $(document).ready(function() {
                                 continue;
                             if(is_prerequisite_filter_on == true && response[i]["need_prerequisite"] === 'true')
                                 continue;
+                            /* When user click on each row, it expands to reveal more course information or
+                            * collapse to hide the detail.
+                            * */
                             var tr = $('<tr class = "mainRow"></tr>').click(function(){
                                 $(this).next('div.information').slideToggle(400);
                             });
@@ -67,8 +89,10 @@ $(document).ready(function() {
                             tr.append($('<td></td>').text(response[i]["credit"]));
                             var cn = "btn btn-inverse-success btn-fw";
                             var innertxt = "Add";
-                            //console.log(i);
-                            //console.log(response[i]["is_enrolled"]);
+
+                            /* If the course is not in shopping cart, display the green "Add" button.
+                               Otherwise, display the orange "Remove" button.
+                            */
                             if (response[i]["in_shopping_cart"] === "true") {
                                 cn = "btn btn-inverse-warning btn-fw";
                                 innertxt = "Remove";
@@ -76,6 +100,7 @@ $(document).ready(function() {
 
                             $('#courseSearchBody').append(tr);
 
+                            /* detailed course information */
                             var info = $('<div class = "information" style = "float: left;"></div>');
                             info.hide();
                             info.append('<h6 style = "font-weight: bold;">Detailed Information</h6>');
@@ -96,6 +121,7 @@ $(document).ready(function() {
 
                             var btns = $('<div class = "buttons"></div>');
 
+                            /* Append a "Add" button to each course */
                             if (innertxt === "Add") {
                                 btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Add</button>').click(function () {
                                     let id = this.id.toString();
@@ -104,12 +130,14 @@ $(document).ready(function() {
                                         btn.classList.remove("btn-inverse-success");
                                         btn.classList.add("btn-inverse-warning");
                                         btn.innerText = "Remove";
+                                        /* When user clicks on "Add" button, add the course to shopping cart. */
                                         $.ajax('/addRemoveCourse', {
                                             type: 'POST',
                                             data: {sessionID: this.id, addCourse: "true"}
                                         }).done(function (response) {
                                         });
                                     } else {
+                                        /* When user clicks on "Remove" button, remove the course from shopping cart. */
                                         btn.classList.remove("btn-inverse-warning");
                                         btn.classList.add("btn-inverse-success");
                                         btn.innerText = "Add";
@@ -123,6 +151,7 @@ $(document).ready(function() {
                                 }));
                             }
                             else {
+                                /* Append a "Remove" button to each course */
                                 btns.append($('<button type="button" class="' + cn + '" id="' + response[i]["session_id"] + '" style = "float: left;">Remove</button>').click(function () {
                                     let id = this.id.toString();
                                     let btn = document.getElementById(id);
@@ -160,6 +189,8 @@ $(document).ready(function() {
         });
     });
 
+    /* COURSE RANKING FUNCTION */
+    /* rank by vacancy */
     $('#vacancy-btn').click(function () {
         let btn = document.getElementById("vacancy-btn");
         if (btn.classList.contains("btn-light")) {
@@ -174,6 +205,7 @@ $(document).ready(function() {
         }
     });
 
+    /* rank by evaluation */
     $('#evaluation-btn').click(function () {
         let btn = document.getElementById("evaluation-btn");
         if (btn.classList.contains("btn-light")) {
@@ -188,6 +220,7 @@ $(document).ready(function() {
         }
     });
 
+    /* rank by popularity */
     $('#popularity-btn').click(function () {
         let btn = document.getElementById("popularity-btn");
         if (btn.classList.contains("btn-light")) {
@@ -202,6 +235,8 @@ $(document).ready(function() {
         }
     });
 
+
+    /* rank by successful regisration rate */
     $('#rate-btn').click(function () {
         let btn = document.getElementById("rate-btn");
         if (btn.classList.contains("btn-light")) {
@@ -216,6 +251,7 @@ $(document).ready(function() {
         }
     });
 
+    /* sort by course name */
     $('#course-name-btn').click(function () {
         let btn = document.getElementById("course-name-btn");
         if (btn.classList.contains("btn-light")) {
@@ -230,6 +266,7 @@ $(document).ready(function() {
         }
     });
 
+    /* sort by course id*/
     $('#course-id-btn').click(function () {
         let btn = document.getElementById("course-id-btn");
         if (btn.classList.contains("btn-light")) {
@@ -244,7 +281,7 @@ $(document).ready(function() {
         }
     });
 
-
+    /* sort by credit */
     $('#course-credit-btn').click(function () {
         let btn = document.getElementById("course-credit-btn");
         if (btn.classList.contains("btn-light")) {
@@ -263,8 +300,10 @@ $(document).ready(function() {
 });
 
 
-
+/* COURSE SORTING FUNCTION */
+/* sort the course search result by some attribute */
 function courseSearchResultSort(ascendingOrder, attribute) {
+    /* Before sorting, store all information in the result table in a data structure @code innerData */
     var innerData = [];
     var table = document.getElementById("courseSearchBody");
     for (var i=0;i<table.rows.length;i++) {
@@ -295,6 +334,7 @@ function courseSearchResultSort(ascendingOrder, attribute) {
         innerData.push(rowData);
     }
 
+    /* sort course data */
     if (ascendingOrder) {
         innerData.sort(function (a, b) {
             return a[attribute].localeCompare(b[attribute]);
@@ -305,8 +345,11 @@ function courseSearchResultSort(ascendingOrder, attribute) {
             return b[attribute].localeCompare(a[attribute]);
         })
     }
+
+    /* empty the result table */
     $('#courseSearchBody').empty();
 
+    /* insert sorted course data into result table */
     for (var i=0;i<innerData.length;i++) {
         var tr = $('<tr class = "mainRow"></tr>').click(function(){
             $(this).next('div.information').slideToggle(400);
@@ -323,6 +366,7 @@ function courseSearchResultSort(ascendingOrder, attribute) {
             innertxt = "Remove";
         }
 
+        /* these information are hidden unless user clicks on a row to expand it */
         $('#courseSearchBody').append(tr);
         var info = $('<div class = "information" style = "float: left;"></div>');
         info.hide();
@@ -335,9 +379,7 @@ function courseSearchResultSort(ascendingOrder, attribute) {
         info.append($('<p></p>').html('<span style = "font-weight: bold;">Session end time: </span>'+innerData[i]["session_end_time"].slice(0, course_name_length)));
         info.append($('<p></p>').html('<span style = "font-weight: bold;">Quota: </span>'+innerData[i]["quota"].slice(0, course_name_length)));
         info.append($('<p></p>').html('<span style = "font-weight: bold;">Vacancy: </span>'+innerData[i]["vacancy"].slice(0, course_name_length)));
-        //alert("?");
         info.append($('<p></p>').html('<span style = "font-weight: bold;">Evaluation: </span>'+innerData[i]["evaluation"].slice(0, course_name_length)));
-        //alert("!");
         info.append($('<p></p>').html('<span style = "font-weight: bold;">Popularity: </span>'+innerData[i]["popularity"].slice(0, course_name_length)));
         info.append($('<p></p>').html('<span style = "font-weight: bold;">Successfully Register rate: </span>'+innerData[i]["func"].slice(0, course_name_length)));
         info.append($('<p></p>').html('<span style = "font-weight: bold;">Comment: </span>'+innerData[i]["comment"].slice(0, schedule_length)));
