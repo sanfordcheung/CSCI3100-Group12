@@ -1,4 +1,7 @@
+/* PLAN GENERATE MODULE */
+
 $(document).ready(function() {
+    /* Upon signing out, erase all user information on the website. */
     $("#Signout").on('click', function() {
         alert("You've successfully sign out!");
         $.ajax('/ClearInfo', {
@@ -7,7 +10,12 @@ $(document).ready(function() {
         );
         window.location = "../login.html";
       });
-      
+
+    /*
+       When user clicks on "Get Plan" button, a POST request is send to backend (login.js).
+       It will generate a course plan and give its response to frontend.
+       Upon receiving the response, notify the user that plan generation is completed.
+    */
     $('#getPlan').click(function () {
         var table = document.getElementById("shoppingCartBody");
         var innerData = [];
@@ -21,6 +29,7 @@ $(document).ready(function() {
             innerData.push(rowData);
         }
 
+
         $.ajax('/generatePlan', {
             type: 'POST',
             data: {courseData: innerData}
@@ -31,12 +40,14 @@ $(document).ready(function() {
     });
 });
 
+/* A sortable table for user to sort the courses by preference. */
 $( function() {
     $( "#shoppingCartBody" ).sortable();
     $( "#shoppingCartBody" ).disableSelection();
 } );
 
 document.addEventListener('DOMContentLoaded', function() {
+    /* Display user information on the website (in sidebar and also the navigator). */
     $.ajax('/userInfo', {
         type: 'POST'
     }).done(function (response) {
@@ -46,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("user-sid").innerText = response.sid;
     }) ;
 
+    /* Add courses in shopping cart to the table. */
     var word = 0;
     $.ajax('/shoppingCart', {
         type: 'POST',

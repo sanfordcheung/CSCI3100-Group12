@@ -1,5 +1,8 @@
+/* USER MODULE */
+/* DISPLAY COURSE PLAN FUNCTION */
 let course_name_length = 50;
 
+/* Upon signing out, erase all user information on the website. */
 $(document).ready(function() {
     $("#Signout").click(function() {
         alert("You've successfully sign out!");
@@ -13,6 +16,7 @@ $(document).ready(function() {
     });
 })
 
+/* display course plan */
 document.addEventListener('DOMContentLoaded', function() {
     var eventData = {
         events : []
@@ -24,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
         datatype: 'json',
         success: function (response) {
             $('#coursePlanBody').empty();
+            /* show course plan by table */
             for(var i = 0; i<response.courseData.length; i++){
                 var tr = $('<tr class = "mainRow"></tr>').click(function(){
                     $(this).next('div.information').slideToggle(400);
@@ -34,9 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 tr.append($('<td></td>').text(response.courseData[i]["preference"]));
                 $('#coursePlanBody').append(tr);
 
+                /* detailed information are hidden unless user click on a row to expand it */
                 var info = $('<div class = "information" style = "float: left;"></div>');
                 info.hide();
                 info.append('<h6 style = "font-weight: bold;">Detailed Information</h6>');
+                // define some variable to hold timestamp data. As these data can be null (set to 0), these variables
+                // by default empty strings
                 var t_s_1;
                 var t_e_1;
                 var s_s_1;
@@ -86,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 var btns = $('<div class = "buttons"></div>');
             }
 
+            /* prepare for events to be shown in calendar */
             for (var i = 0; i < response.courseData.length; i++) {
                 var event1 = {}, event2 = {}, event3 = {};
                 event1['start'] = new Date(response.courseData[i]["session_start_time_1"]);
@@ -103,8 +112,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 event3['title'] = response.courseData[i]["course_id"];
                 eventData.events.push(event3);
             }
+
+            /* show course plan by calendar */
             renderCalendar(eventData);
 
+            /* Display user information on the website (in sidebar and also the navigator). */
             $.ajax({
                 type: 'POST',
                 url: '/userInfo',
