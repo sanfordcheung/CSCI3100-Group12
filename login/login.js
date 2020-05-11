@@ -1,9 +1,15 @@
+/*
+    This file contains the entry point of the App, processes GET/POST request, and queries the database.
+ */
+
+/* Include some packages. */
 var mysql = require('mysql');
 var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var path = require('path');
 
+/* Global variables and constants used in this file. Variables are initialized with some dummy values. */
 global.sid = "0";
 global.username = "Jimmy";
 global.email = "Jimmy@gmail.com";
@@ -15,10 +21,11 @@ global.time_convert = 1000;
 global.max_credits_per_term = 19;
 global.course_plan_next_index = 0;
 
+/* Connect to database. */
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '123456',
+	password : '',
 	database : 'cusisdbBeta'
 });
 
@@ -35,11 +42,13 @@ app.use(express.static(__dirname + '/'));
 app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 app.use(express.json({limit: '50mb', extended: true}));
 
+/* USER MODULE */
+/* The entry point is the login page. On this page, users can go to Sign Up or Sign In. */
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname + '/login.html'));
 });
 
-
+/* Clear user information after signing out. */
 app.post('/ClearInfo', ClearInfo);
 function ClearInfo(request,response){
     global.sid = "0";
@@ -56,7 +65,11 @@ function ClearInfo(request,response){
     response.end();
 } 
 
-
+/*
+   USER LOGIN FUNCTION
+   User click on LOGIN button and send a POST request. Function loginAuthenticate checks
+   whether the sid and password matches the user information in the database.
+ */
 app.post('/auth', loginAuthenticate);
 
 app.listen(3000);
@@ -84,7 +97,12 @@ function loginAuthenticate(request, response) {
         response.end();
     }
 }
-/* register */
+/*
+    USER REGISTRATION FUNCTION
+    Steps for registration:
+    1. register with sid, password, email and a username
+    2. enter the confirmation code
+*/
 app.post('/register', register);
 app.post('/pages/registerRedirect', registerRedirect);
 function registerRedirect(request, response) {
@@ -150,9 +168,8 @@ function register(request, response) {
                 from: '"Charles-Kuang" <k1155124427@gmail.com>', // sender address
                 to: email, // list of receivers
                 subject: 'Register Confirmation', // Subject line
-                // ·¢ËÍtext»òÕßhtml¸ñÊ½
                 text: 'Your active code is: '+code, // plain text body
-                //html: fs.createReadStream(path.resolve(__dirname, 'confirm.html')) // Á÷
+                //html: fs.createReadStream(path.resolve(__dirname, 'confirm.html'))
                 };
 
                 // send mail with defined transport object
@@ -169,7 +186,11 @@ function register(request, response) {
 	}}}}}
 }
 
-/* confirm */
+/*
+    CONFIRM FUNCTION
+    When the user enters the correct confirmation code, he/she will be
+    redirected to the login page.
+*/
 
 app.post('/confirm',confirm);
 app.post('/confirmRedirect', confirmRedirect);
@@ -186,6 +207,7 @@ function confirm(request,response){
     var input_code = request.body.code;
     if(input_code == global.code){
         global.confirm = "1";
+        /* update database by inserting newly registered user information into user table. */
         connection.query('INSERT INTO user (sid,password,name,email) VALUES (?,?,?,?)',[global.sid,global.password,global.name,global.email], function(error, results, fields){});
         response.send("Registration successed! Turn to the login page now.");
         response.end();
@@ -194,7 +216,10 @@ function confirm(request,response){
     }
 }
 
-/* user info */
+/*
+    user info
+    Send user information to frontend.
+*/
 app.post('/userInfo', userInfo);
 
 function userInfo(request, response) {
@@ -207,7 +232,106 @@ function userInfo(request, response) {
     }
 }
 
-/* course search */
+/* ADD REMOVE COURSE FUNCTION */
+/* Add/Remove course to/from shopping cart */
+app.post("/addRemoveCourse", addRemoveCourse);
+function addRemoveCourse(request, response) {
+    if (!global.loggedin) {
+        return;
+    }
+
+    if (request.body.addCourse === "true") {
+        connection.query("select course_id, session_info.session_id " +
+            "from course_info natural join course_session_list left join session_info " +
+            "on course_session_list.session_id=session_info.session_id " +
+            "where session_info.session_id=?", [request.body.sessionID], function (error, results, fields) {
+            if (results.length > 0) {
+                response["course_id"] = results[0].course_id;
+                response["session_id"] = results[0].session_id;
+                response["tutorial_id"] = "0000";
+                response["sid"] = global.sid;
+                connection.query("insert into shopping_cart values (?, ?, ?, ?)", [response["course_id"], response["session_id"], response["tutorial_id"], response["sid"]], function (err, re, fields){});
+                connection.query("UPDATE session_info SET popularity = popularity+1 WHERE session_id = ?", [response["session_id"]], function (err, re, fields) {});
+            }
+        });
+
+    }
+    else {
+        response["session_id"] = request.body.sessionID;
+        connection.query("delete from shopping_cart where session_id=?", [response["session_id"]], function (err, re, fields) {});
+        connection.query("UPDATE session_info SET popularity = popularity-1 WHERE session_id = ?", [response["session_id"]], function (err, re, fields) {});
+    }
+}
+
+/* VIEW SHOPPING CART FUNCTION */
+/* get shopping cart */
+app.post('/shoppingCart', getShoppingCart);
+
+function getShoppingCart(request, response) {
+    if (!global.loggedin) {
+        return;
+    }
+
+    var sid = global.sid;
+
+    var res = {courseData:[]};
+    connection.query('select * from course_info natural join shopping_cart where sid=?', [sid], function(error, results, fields) {
+        if (results.length > 0) {
+            for (var i=0;i<results.length;i++) {
+                var dt = {};
+                dt["course_id"] = results[i].course_id;
+                dt["session_id"] = results[i].session_id;
+                dt["credit"] = results[i].credit;
+                res.courseData.push(dt);
+            }
+            response.json(res);
+        } else {
+            response.json(res);
+        }
+
+    });
+}
+
+/* VIEW TIMETABLE FUNCTION */
+/* get timetable */
+app.post('/timeTable', getTimeTable);
+
+function getTimeTable(request, response) {
+    if (!global.loggedin) {
+        return;
+    }
+
+    var sid = global.sid;
+    var res = {courseData:[]};
+    connection.query('SELECT course_info.course_id, course_name, session_start_time_1, session_start_time_2, session_start_time_3, session_end_time_1, session_end_time_2, session_end_time_3' +
+        ' FROM session_info NATURAL JOIN shopping_cart NATURAL JOIN course_session_list LEFT JOIN course_info ON course_info.course_id=course_session_list.course_id' +
+        ' WHERE (shopping_cart.sid=?) GROUP BY course_id', [sid], function(error, results, fields) {
+        if (results.length > 0) {
+            for (var i=0;i<results.length;i++) {
+                var dt = {};
+                dt["course_id"] = results[i].course_id;
+                dt["course_name"] = results[i].course_name;
+                dt["session_start_time_1"] = results[i].session_start_time_1;
+                dt["session_start_time_2"] = results[i].session_start_time_2;
+                dt["session_start_time_3"] = results[i].session_start_time_3;
+                dt["session_end_time_1"] = results[i].session_end_time_1;
+                dt["session_end_time_2"] = results[i].session_end_time_2;
+                dt["session_end_time_3"] = results[i].session_end_time_3;
+                res.courseData.push(dt);
+            }
+            response.json(res);
+        } else {
+            response.json(res);
+        }
+    });
+}
+
+
+/* COURSE SEARCH MODULE */
+/*
+    COURSE SEARCH FUNCTION
+    Send course search result to the frontend.
+*/
 app.post('/courseSearch', courseSearch);
 
 function courseSearch(request, response) {
@@ -276,8 +400,8 @@ function courseSearch(request, response) {
     });
 }
 
-
-/* check if search result courses are in shopping cart*/
+/* FILTER */
+/* check if search result courses are in shopping cart */
 app.post("/inShoppingCart", inShoppingCart);
 function inShoppingCart(request, response) {
     if (!global.loggedin) {
@@ -305,6 +429,7 @@ function inShoppingCart(request, response) {
     });
 }
 
+/* FILTER */
 /* check if search result courses are enrolled or passed */
 app.post("/isEnrolled", isEnrolled);
 function isEnrolled(request, response){
@@ -327,6 +452,7 @@ function isEnrolled(request, response){
     });
 }
 
+/* FILTER */
 /* check if search result courses need prerequisite */
 app.post("/needPrerequisite", needPrerequisite);
 function needPrerequisite(request, response){
@@ -361,115 +487,13 @@ function needPrerequisite(request, response){
     });
 }
 
-/* Add/Remove course to/from shopping cart */
-app.post("/addRemoveCourse", addRemoveCourse);
-function addRemoveCourse(request, response) {
-    if (!global.loggedin) {
-        return;
-    }
-
-    if (request.body.addCourse === "true") {
-        connection.query("select course_id, session_info.session_id " +
-            "from course_info natural join course_session_list left join session_info " +
-            "on course_session_list.session_id=session_info.session_id " +
-            "where session_info.session_id=?", [request.body.sessionID], function (error, results, fields) {
-            if (results.length > 0) {
-                response["course_id"] = results[0].course_id;
-                response["session_id"] = results[0].session_id;
-                response["tutorial_id"] = "0000";
-                response["sid"] = global.sid;
-                connection.query("insert into shopping_cart values (?, ?, ?, ?)", [response["course_id"], response["session_id"], response["tutorial_id"], response["sid"]], function (err, re, fields){});
-                connection.query("UPDATE session_info SET popularity = popularity+1 WHERE session_id = ?", [response["session_id"]], function (err, re, fields) {});
-            }
-        });
-        /*
-        response["course_id"] = request.body.courseID;
-        response["session_id"] = request.body.sessionID;
-        response["tutorial_id"] = "0000";
-        response["sid"] = global.sid;
-        connection.query("insert into shopping_cart values (?, ?, ?, ?)", [response["course_id"], response["session_id"], response["tutorial_id"], response["sid"]], function (err, re, fields) {
-            response.json(re);
-        });
-        */
-    }
-    else {
-        response["session_id"] = request.body.sessionID;
-        connection.query("delete from shopping_cart where session_id=?", [response["session_id"]], function (err, re, fields) {});
-        connection.query("UPDATE session_info SET popularity = popularity-1 WHERE session_id = ?", [response["session_id"]], function (err, re, fields) {});
-    }
-}
-
-/* get shopping cart */
-app.post('/shoppingCart', getShoppingCart);
-
-function getShoppingCart(request, response) {
-    if (!global.loggedin) {
-        return;
-    }
-
-    //var sid = request.body.keyword;
-    var sid = global.sid;
-
-    var res = {courseData:[]};
-    connection.query('select * from course_info natural join shopping_cart where sid=?', [sid], function(error, results, fields) {
-        if (results.length > 0) {
-            for (var i=0;i<results.length;i++) {
-                var dt = {};
-                dt["course_id"] = results[i].course_id;
-                dt["session_id"] = results[i].session_id;
-                dt["credit"] = results[i].credit;
-                res.courseData.push(dt);
-            }
-            response.json(res);
-        } else {
-            response.json(res);
-        }
-
-    });
-}
-
-/* get timetable */
-app.post('/timeTable', getTimeTable);
-
-function getTimeTable(request, response) {
-    if (!global.loggedin) {
-        return;
-    }
-
-    var sid = global.sid;
-    var res = {courseData:[]};
-    connection.query('SELECT course_info.course_id, course_name, session_start_time_1, session_start_time_2, session_start_time_3, session_end_time_1, session_end_time_2, session_end_time_3' +
-        ' FROM session_info NATURAL JOIN shopping_cart NATURAL JOIN course_session_list LEFT JOIN course_info ON course_info.course_id=course_session_list.course_id' +
-        ' WHERE (shopping_cart.sid=?) GROUP BY course_id', [sid], function(error, results, fields) {
-        if (results.length > 0) {
-            for (var i=0;i<results.length;i++) {
-                var dt = {};
-                dt["course_id"] = results[i].course_id;
-                dt["course_name"] = results[i].course_name;
-                dt["session_start_time_1"] = results[i].session_start_time_1;
-                dt["session_start_time_2"] = results[i].session_start_time_2;
-                dt["session_start_time_3"] = results[i].session_start_time_3;
-                dt["session_end_time_1"] = results[i].session_end_time_1;
-                dt["session_end_time_2"] = results[i].session_end_time_2;
-                dt["session_end_time_3"] = results[i].session_end_time_3;
-                res.courseData.push(dt);
-            }
-            response.json(res);
-        } else {
-            response.json(res);
-        }
-    });
-}
-
+/* PLAN GENERATION MODULE */
 app.post('/coursePlan', getCoursePlanTimeTable);
 function getCoursePlanTimeTable (request, response) {
     if (!global.loggedin) {
         return;
     }
 
-    /*
-    TODO: select just one plan
-     */
     var ret = {courseData: []};
     connection.query("select * from course_plan where sid=? and plan_index=?", [global.sid, global.course_plan_next_index-1], function (err, res, f) {
         ret["courseData"] = JSON.parse(JSON.stringify(res));
@@ -544,14 +568,7 @@ function generatePlan (request, response) {
                             res[j]["session_end_time_3"] = results[i].session_end_time_3.getTime() / global.global.time_convert;
                         }
 
-                        /*
-                        res[j]["session_start_time_1"] = results[i].session_start_time_1;
-                        res[j]["session_start_time_2"] = results[i].session_start_time_2;
-                        res[j]["session_start_time_3"] = results[i].session_start_time_3;
-                        res[j]["session_end_time_1"] = results[i].session_end_time_1;
-                        res[j]["session_end_time_2"] = results[i].session_end_time_2;
-                        res[j]["session_end_time_3"] = results[i].session_end_time_3;
-                         */
+
 
                         /*
                         unique to tutorial
@@ -668,11 +685,7 @@ function generatePlan (request, response) {
                 ret[i]["tutorial_info"]["tutorial_start_time_1"] = new Date(ret[i]["tutorial_info"]["tutorial_start_time_1"] * global.time_convert);
                 ret[i]["tutorial_info"]["tutorial_end_time_1"] = new Date(ret[i]["tutorial_info"]["tutorial_end_time_1"] * global.time_convert);
             }
-            /*
-            for now, just save the plan
-            TODO: 1. user choose to save the plan or not
-                  2. generate multiple plans
-             */
+
             for(var i=0;i<ret.length;i++) {
 
                 connection.query("insert into course_plan values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", [ret[i]["course_id"], ret[i]["session_id"], ret[i]["credit"], ret[i]["preference"],
