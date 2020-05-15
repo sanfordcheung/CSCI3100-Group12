@@ -1042,17 +1042,22 @@ CREATE TABLE `course_plan` (
 update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155000001;
 update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155124427;
 update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155148372;
-update session_info set session_start_time_1 = date_add(session_start_time_1, interval 2 week);
-update session_info set session_start_time_2 = date_add(session_start_time_2, interval 2 week);
-update session_info set session_start_time_3 = date_add(session_start_time_3, interval 2 week);
-update session_info set session_end_time_1 = date_add(session_end_time_1, interval 2 week);
-update session_info set session_end_time_2 = date_add(session_end_time_2, interval 2 week);
-update session_info set session_end_time_3 = date_add(session_end_time_3, interval 2 week);
-update course_plan set tutorial_start_time_1 = date_add(tutorial_start_time_1, interval 2 week);
-update course_plan set tutorial_end_time_1 = date_add(tutorial_end_time_1, interval 2 week);
-update course_plan set session_start_time_1 = date_add(session_start_time_1, interval 2 week);
-update course_plan set session_start_time_2 = date_add(session_start_time_2, interval 2 week);
-update course_plan set session_start_time_3 = date_add(session_start_time_3, interval 2 week);
-update course_plan set session_end_time_1 = date_add(session_end_time_1, interval 2 week);
-update course_plan set session_end_time_2 = date_add(session_end_time_2, interval 2 week);
-update course_plan set session_end_time_3 = date_add(session_end_time_3, interval 2 week);
+
+update session_info set session_start_time_1 = date_add(session_start_time_1, interval ABS(datediff(session_start_time_1, NOW())) DIV 7 week) WHERE datediff(session_start_time_1, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update session_info set session_start_time_2 = date_add(session_start_time_2, interval ABS(datediff(session_start_time_2, NOW())) DIV 7 week) WHERE datediff(session_start_time_2, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update session_info set session_start_time_3 = date_add(session_start_time_3, interval ABS(datediff(session_start_time_3, NOW())) DIV 7 week) WHERE datediff(session_start_time_3, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+
+update session_info set session_end_time_1 = date_add(session_end_time_1, interval ABS(datediff(session_end_time_1, NOW())) DIV 7 week) WHERE datediff(session_end_time_1, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update session_info set session_end_time_2 = date_add(session_end_time_2, interval ABS(datediff(session_end_time_2, NOW())) DIV 7 week) WHERE datediff(session_end_time_2, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update session_info set session_end_time_3 = date_add(session_end_time_3, interval ABS(datediff(session_end_time_3, NOW())) DIV 7 week) WHERE datediff(session_end_time_3, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+
+update course_plan set tutorial_start_time_1 = date_add(tutorial_start_time_1, interval ABS(datediff(tutorial_start_time_1, NOW())) DIV 7 week) WHERE datediff(tutorial_start_time_1, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update course_plan set tutorial_end_time_1 = date_add(tutorial_end_time_1, interval ABS(datediff(tutorial_end_time_1, NOW())) DIV 7 week) WHERE datediff(tutorial_end_time_1, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+
+update course_plan set session_start_time_1 = date_add(session_start_time_1, interval ABS(datediff(session_start_time_1, NOW())) DIV 7 week) WHERE datediff(session_start_time_1, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update course_plan set session_start_time_2 = date_add(session_start_time_2, interval ABS(datediff(session_start_time_2, NOW())) DIV 7 week) WHERE datediff(session_start_time_2, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update course_plan set session_start_time_3 = date_add(session_start_time_3, interval ABS(datediff(session_start_time_3, NOW())) DIV 7 week) WHERE datediff(session_start_time_3, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+
+update course_plan set session_end_time_1 = date_add(session_end_time_1, interval ABS(datediff(session_end_time_1, NOW())) DIV 7 week) WHERE datediff(session_end_time_1, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update course_plan set session_end_time_2 = date_add(session_end_time_2, interval ABS(datediff(session_end_time_2, NOW())) DIV 7 week) WHERE datediff(session_end_time_2, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;
+update course_plan set session_end_time_3 = date_add(session_end_time_3, interval ABS(datediff(session_end_time_3, NOW())) DIV 7 week) WHERE datediff(session_end_time_3, '2020-08-30 00:00:00') * datediff(NOW(),'2020-08-30 00:00:00') > 0;

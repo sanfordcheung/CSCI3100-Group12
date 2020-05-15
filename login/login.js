@@ -25,7 +25,7 @@ global.course_plan_next_index = 0;
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '',
+	password : '123456',
 	database : 'cusisdbBeta'
 });
 
@@ -219,16 +219,45 @@ function confirm(request,response){
 /*
     user info
     Send user information to frontend.
+    Local database will also be updated
 */
 app.post('/userInfo', userInfo);
 
 function userInfo(request, response) {
     if (global.loggedin) {
+        console.log(getTime(0));
         var res = {};
         res["username"] = global.username;
         res["email"] = global.email;
         res["sid"] = global.sid;
         response.json(res);
+        connection.query(
+        'update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155000001;'+
+        'update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155124427;'+
+        'update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155148372'
+        ,[],function(error, results, fields){});
+        connection.query(
+        'update session_info set session_start_time_1 = date_add(session_start_time_1, interval ABS(datediff(session_start_time_1, NOW())) DIV 7 week) WHERE datediff(session_start_time_1, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update session_info set session_start_time_2 = date_add(session_start_time_2, interval ABS(datediff(session_start_time_2, NOW())) DIV 7 week) WHERE datediff(session_start_time_2, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update session_info set session_start_time_3 = date_add(session_start_time_3, interval ABS(datediff(session_start_time_3, NOW())) DIV 7 week) WHERE datediff(session_start_time_3, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update session_info set session_end_time_1 = date_add(session_end_time_1, interval ABS(datediff(session_end_time_1, NOW())) DIV 7 week) WHERE datediff(session_end_time_1, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update session_info set session_end_time_2 = date_add(session_end_time_2, interval ABS(datediff(session_end_time_2, NOW())) DIV 7 week) WHERE datediff(session_end_time_2, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update session_info set session_end_time_3 = date_add(session_end_time_3, interval ABS(datediff(session_end_time_3, NOW())) DIV 7 week) WHERE datediff(session_end_time_3, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0'
+        ,[],function(error, results, fields){});
+        connection.query(
+        'update course_plan set tutorial_start_time_1 = date_add(tutorial_start_time_1, interval ABS(datediff(tutorial_start_time_1, NOW())) DIV 7 week) WHERE datediff(tutorial_start_time_1, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update course_plan set tutorial_end_time_1 = date_add(tutorial_end_time_1, interval ABS(datediff(tutorial_end_time_1, NOW())) DIV 7 week) WHERE datediff(tutorial_end_time_1, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0'
+        ,[],function(error, results, fields){});
+        connection.query(
+        'update course_plan set session_start_time_1 = date_add(session_start_time_1, interval ABS(datediff(session_start_time_1, NOW())) DIV 7 week) WHERE datediff(session_start_time_1, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update course_plan set session_start_time_2 = date_add(session_start_time_2, interval ABS(datediff(session_start_time_2, NOW())) DIV 7 week) WHERE datediff(session_start_time_2, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update course_plan set session_start_time_3 = date_add(session_start_time_3, interval ABS(datediff(session_start_time_3, NOW())) DIV 7 week) WHERE datediff(session_start_time_3, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0'
+        ,[],function(error, results, fields){});
+        connection.query(
+        'update course_plan set session_end_time_1 = date_add(session_end_time_1, interval ABS(datediff(session_end_time_1, NOW())) DIV 7 week) WHERE datediff(session_end_time_1, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update course_plan set session_end_time_2 = date_add(session_end_time_2, interval ABS(datediff(session_end_time_2, NOW())) DIV 7 week) WHERE datediff(session_end_time_2, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
+        'update course_plan set session_end_time_3 = date_add(session_end_time_3, interval ABS(datediff(session_end_time_3, NOW())) DIV 7 week) WHERE datediff(session_end_time_3, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0'
+        ,[],function(error, results, fields){});
     }
 }
 
@@ -273,7 +302,7 @@ function getShoppingCart(request, response) {
     }
 
     var sid = global.sid;
-
+    
     var res = {courseData:[]};
     connection.query('select * from course_info natural join shopping_cart where sid=?', [sid], function(error, results, fields) {
         if (results.length > 0) {

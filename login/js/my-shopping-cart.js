@@ -1,7 +1,3 @@
-/* USER MODULE */
-/* DISPLAY SHOPPING CART FUNCTION */
-
-/* Upon signing out, erase all user information on the website. */
 $(document).ready(function() {
     $("#Signout").click(function() {
         alert("You've successfully sign out!");
@@ -26,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {keyword: word},
         datatype: 'json',
         success: function (response) {
-            /* prepare for events to be shown in calendar */
             for (var i = 0; i < response.courseData.length; i++) {
                 var event1 = {}, event2 = {}, event3 = {};
                 event1['start'] = new Date(response.courseData[i]["session_start_time_1"]);
@@ -44,10 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 event3['title'] = response.courseData[i]["course_id"];
                 eventData.events.push(event3);
             }
-            /* show course plan by calendar */
             renderCalendar(eventData);
-
-            /* Display user information on the website (in sidebar and also the navigator). */
             $.ajax({
                 type: 'POST',
                 url: '/userInfo',
