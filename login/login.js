@@ -25,7 +25,7 @@ global.course_plan_next_index = 0;
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '',
+	password : '123456',
 	database : 'cusisdbBeta'
 });
 
@@ -230,11 +230,6 @@ function userInfo(request, response) {
         res["email"] = global.email;
         res["sid"] = global.sid;
         response.json(res);
-        connection.query(
-        'update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155000001;'+
-        'update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155124427;'+
-        'update session_info NATURAL JOIN shopping_cart  SET popularity = popularity + 1 WHERE session_info.session_id = shopping_cart.session_id AND sid = 1155148372'
-        ,[],function(error, results, fields){});
         connection.query(
         'update session_info set session_start_time_1 = date_add(session_start_time_1, interval ABS(datediff(session_start_time_1, NOW())) DIV 7 week) WHERE datediff(session_start_time_1, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
         'update session_info set session_start_time_2 = date_add(session_start_time_2, interval ABS(datediff(session_start_time_2, NOW())) DIV 7 week) WHERE datediff(session_start_time_2, "2020-08-30 00:00:00") * datediff(NOW(),"2020-08-30 00:00:00") > 0;'+
