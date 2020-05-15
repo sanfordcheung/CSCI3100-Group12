@@ -723,8 +723,6 @@
                 icons: {primary: 'ui-icon-seek-prev'}})
               .click(function() {
                   self.element.weekCalendar('prev');
-                  alert("!");
-                  renderCalendar(eventData);
                   return false;
                 });
 
@@ -734,7 +732,6 @@
                 icons: {primary: 'ui-icon-seek-next'}})
               .click(function() {
                   self.element.weekCalendar('next');
-                  renderCalendar(eventData);
                   return false;
                 });
 

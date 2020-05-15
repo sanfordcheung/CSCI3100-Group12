@@ -25,7 +25,7 @@ global.course_plan_next_index = 0;
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '123456',
+	password : '',
 	database : 'cusisdbBeta'
 });
 
@@ -225,7 +225,6 @@ app.post('/userInfo', userInfo);
 
 function userInfo(request, response) {
     if (global.loggedin) {
-        console.log(getTime(0));
         var res = {};
         res["username"] = global.username;
         res["email"] = global.email;
