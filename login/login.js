@@ -25,7 +25,7 @@ global.course_plan_next_index = 0;
 var connection = mysql.createConnection({
 	host     : 'localhost',
 	user     : 'root',
-	password : '123456',
+	password : '',
 	database : 'cusisdbBeta'
 });
 
@@ -209,7 +209,7 @@ function confirm(request,response){
         global.confirm = "1";
         /* update database by inserting newly registered user information into user table. */
         connection.query('INSERT INTO user (sid,password,name,email) VALUES (?,?,?,?)',[global.sid,global.password,global.name,global.email], function(error, results, fields){});
-        response.send("Registration successed! Turn to the login page now.");
+        response.send("Registration succeeded! Turn to the login page now.");
         response.end();
     } else {
         response.send("Incorrect code! Please check again.");

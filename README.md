@@ -113,36 +113,3 @@ Now, the course search module can only search by keyword. No filter
 or ranking is implemented. The plan generate module allows users to
 drag and pull the courses. The calendar automatically loads courses
 in user's shopping cart into it.
-
-<h2>Todo list</h2>
-
-Please keep the style consistent. The top navigation bar and
-left slider are common in every pages.  
-
-<h3> User module</h3>
-
-<h4>User information</h4>
-
-- Avatar
-- Preference
-
-<h3>Course search module </h3>
-
-<h4>Search </h4>
-
-- *realtime feedback 
-- *adaptive search
-
-<h3>Plan Generate Module</h3>
-
-- refinement: now only one plan can be generated when the user press `Get Plan`
-button in the plan generate page. Implement multiplan generation and save.
-- refinement: now timetable shows `course_id` as slot title. Show it is lecture or
-tutorial on the title.
-
-<h3>*Course recommendation module</h3>
-
-- category: major, elective, UG, minor
-- faculty package
-- pattern matching (major course / minor)
-- remark/voting (elective course / UG course)
